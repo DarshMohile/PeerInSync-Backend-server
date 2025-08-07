@@ -1,0 +1,21 @@
+{
+  "name": "pis_backend",
+  "version": "1.0.0",
+  "description": "peer in sync is a website to connect and promote interaction between students and alumni. This is a backend server for the website. The server facilitates connection between database and client side pages, implements authentication and authorization, implements routing and HTTP get, post, put/patch and delete api for handling requests.",
+  "license": "ISC",
+  "author": "Darsh V. Mohile",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "lodash": "^4.17.21",
+    "mongodb": "^6.18.0",
+    "mongoose": "^8.14.0"
+  }
+}
