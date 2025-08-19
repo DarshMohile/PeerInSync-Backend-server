@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const studentSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
 
     fName:{
 
@@ -81,5 +81,5 @@ const studentSchema = new mongoose.Schema({
 });
 
 
-const studentModel = mongoose.model('studentModel', studentSchema);
-module.exports = studentModel;
+const userModel = mongoose.model('userModel', userSchema);
+module.exports = userModel;

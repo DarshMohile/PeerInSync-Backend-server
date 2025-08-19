@@ -3,10 +3,9 @@
 const express = require('express');
 const app = express();
 const router = express.Router();
-const studentModel = require('../dataModels/studentModel');
+const userModel = require('../dataModels/userModel');
 
 app.use(express.json());
-
 
 router.post('/signup', async (req, res) => {
 
@@ -14,21 +13,11 @@ router.post('/signup', async (req, res) => {
     {
         const data = req.body;
         console.log('Received Data: ', data);
+
+        let newUser = new userModel(data);
+        await newUser.save();
+        
         res.status(200).json({msg: 'registered successfully'});
-        
-        if(data.role == 'Student')
-        {
-            let newStudent = new studentModel(data);
-            await newStudent.save();
-            
-        }
-        
-        if(data.role == 'Alumni')
-        {
-            let newAlumni = new alumniModel(data);
-            await newAlumni.save();
-        }
-        
     }
     catch(err)
     {
