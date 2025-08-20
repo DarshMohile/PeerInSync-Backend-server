@@ -78,7 +78,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         enum: ['Student', 'Alumni']
     }
-});
+}, {collection: "usermodels"});
 
 
 const userModel = mongoose.model('userModel', userSchema);
