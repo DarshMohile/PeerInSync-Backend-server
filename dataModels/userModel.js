@@ -23,25 +23,21 @@ const userSchema = new mongoose.Schema({
         match: /.+\@.+\..+/
     },
     
+    password:{
+
+        type: String,
+        required: true,
+        minlength: 8,
+        maxlength: 16,
+        select: false
+    },
     
     mob_num:{
         
-        type: Number,
+        type: String,
         required: true,
         minlength: 10,
         maxlength: 10
-    },
-    
-    course_name:{
-
-        type: String,
-        required: true,
-    },
-
-    branch:{
-
-        type: String,
-        required: true
     },
     
     college_name:{
@@ -56,20 +52,23 @@ const userSchema = new mongoose.Schema({
         required: true
     },
 
+    course_name:{
+
+        type: String,
+        required: true,
+    },
+
+    branch:{
+
+        type: String,
+        required: true
+    },
+
     gender:{
 
         type: String,
         required: true,
         enum: ['Male', 'Female', 'Other']
-    },
-    
-    password:{
-
-        type: String,
-        required: true,
-        minlength: 8,
-        maxlength: 16,
-        select: false
     },
 
     role:{
@@ -78,6 +77,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         enum: ['Student', 'Alumni']
     }
+    
 }, {collection: "usermodels"});
 
 
