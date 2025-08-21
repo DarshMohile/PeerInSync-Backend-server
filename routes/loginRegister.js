@@ -6,6 +6,7 @@ const router = express.Router();
 const userModel = require('../dataModels/userModel');
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 router.post('/signup', async (req, res) => {
 

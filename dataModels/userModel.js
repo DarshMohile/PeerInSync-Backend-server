@@ -68,14 +68,14 @@ const userSchema = new mongoose.Schema({
 
         type: String,
         required: true,
-        enum: ['Male', 'Female', 'Other']
+        enum: ['male', 'female', 'other']
     },
 
     role:{
 
         type: String,
         required: true,
-        enum: ['Student', 'Alumni']
+        enum: ['student', 'alumni']
     }
     
 }, {collection: "usermodels"});
