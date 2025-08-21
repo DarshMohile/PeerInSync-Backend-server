@@ -46,21 +46,21 @@ const userSchema = new mongoose.Schema({
         required: true
     },
 
-    current_year_of_study:{
-
-        type: Number,
-        required: true
-    },
-
     course_name:{
 
         type: String,
         required: true,
     },
-
+    
     branch:{
 
         type: String,
+        required: true
+    },
+
+    current_year_of_study:{
+
+        type: Number,
         required: true
     },
 
