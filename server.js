@@ -14,6 +14,14 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'rootPage')));
 
 
+const logInfo = (req, res, next) => {
+
+    console.log(`[${new Date().toLocaleString()}] Request made:\nRemote IP:${req.ip}\nRemote Host Name: ${req.hostname}\nMethod: ${req.method}\nTo: ${req.originalUrl}\n`);
+    next();
+}
+app.use(logInfo);
+
+
 //Server root or homepage
 app.get('/', (req, res) => {
 
@@ -42,17 +50,9 @@ app.get('/hello', (req, res) => {
     }
 });
 
-
 app.use('/loginRegisterRoutes', loginRegisterRoutes);
 
 
-const logInfo = (req, res, next) => {
-
-    console.log(`[${new Date().toLocaleString()}] Request made:\nRemote IP:${req.ip}\nRemote Host Name: ${req.hostname}\nMethod: ${req.method}\nTo: ${req.originalUrl}\n`);
-    next();
-}
-
-app.use(logInfo);
 
 app.listen(port, () => {
     
