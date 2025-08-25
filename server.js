@@ -1,5 +1,4 @@
 //entrypoint file for web server.
-
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -46,6 +45,14 @@ app.get('/hello', (req, res) => {
 
 app.use('/loginRegisterRoutes', loginRegisterRoutes);
 
+
+const logInfo = (req, res, next) => {
+
+    console.log(`[${new Date().toLocaleString()}] Request made:\nRemote IP:${req.ip}\nRemote Host Name: ${req.hostname}\nMethod: ${req.method}\nTo: ${req.originalUrl}\n`);
+    next();
+}
+
+app.use(logInfo);
 
 app.listen(port, () => {
     

@@ -43,4 +43,23 @@ router.post('/signup', async (req, res) => {
 });
 
 
+// router.get('/login', async (req, res) => {
+
+//     try
+//     {
+//         const query = req.body.email;
+//         const password = req.body.password;
+
+        
+//     }
+//     catch(err)
+//     {
+//         console.log(err.message);
+//         res.status(500).json({error: 'Internal Server Error.'});
+//     }
+
+
+// });
+
+
 module.exports = router;
