@@ -3,20 +3,26 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const cors = require('cors');
+
 const loginRegisterRoutes = require('./routes/loginRegister');
-require('dotenv').config();
-require('./modules/databaseLink');
 
 const port = process.env.PORT || 3000;
 
+require('dotenv').config();
+require('./modules/databaseLink');
+
+
 app.use(express.json());
 app.use(cors());
+app.set('trust proxy', true);
 app.use(express.static(path.join(__dirname, 'rootPage')));
 
 
 const logInfo = (req, res, next) => {
 
-    console.log(`[${new Date().toLocaleString()}] Request made:\nRemote IP:${req.ip}\nRemote Host Name: ${req.hostname}\nMethod: ${req.method}\nTo: ${req.originalUrl}\n`);
+    const ip = req.header['x-forwarded-for'] || req.ip;
+
+    console.log(`[${new Date().toLocaleString()}] Incoming Request:\nClient IP: ${ip}\nClient Host Name: ${req.headers.origin}\nMethod: ${req.method}\nTo: ${req.originalUrl}\n`);
     next();
 }
 app.use(logInfo);
