@@ -3,8 +3,12 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const cors = require('cors');
+const passport = require('passport');
+const localStrategy = require('passport-local').Strategy;
+const userModel = require('./dataModels/userModel');
 
 const loginRegisterRoutes = require('./routes/loginRegister');
+const { findOne } = require('./dataModels/userModel');
 
 const port = process.env.PORT || 3000;
 
@@ -18,6 +22,7 @@ app.set('trust proxy', true);
 app.use(express.static(path.join(__dirname, 'rootPage')));
 
 
+//Log the details of every request that comes to backend
 const logInfo = (req, res, next) => {
 
     const ip = req.header['x-forwarded-for'] || req.ip;
@@ -28,8 +33,44 @@ const logInfo = (req, res, next) => {
 app.use(logInfo);
 
 
+//Authentication using email and password
+passport.use(new localStrategy(async (email, password, done) => {
+
+    try
+    {
+        console.log("Received Credentials for Auth: ", email, password);
+
+        const user = await findOne({email: email});
+
+        if(!user)
+        {
+            return done(null, false, {message: 'User not found'});
+        }
+        
+        const isValidPassword = user.password === password ? true : false;
+
+        if(isValidPassword)
+        {
+            return done(null, user);
+        }
+        else
+        {
+            return done(null, false, {message: 'Invalid Password'});
+        }
+
+    }
+    catch(err)
+    {
+        return done(err);
+    }
+
+}));
+
+app.use(passport.initialize());
+
+
 //Server root or homepage
-app.get('/', (req, res) => {
+app.get('/', passport.authenticate('local', {session: false}), (req, res) => {
 
     try
     {
@@ -43,6 +84,7 @@ app.get('/', (req, res) => {
 });
 
 
+//simple get method for testing purposes
 app.get('/hello', (req, res) => {
 
     try
