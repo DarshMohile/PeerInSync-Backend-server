@@ -40,7 +40,7 @@ passport.use(new localStrategy(async (email, password, done) => {
     {
         console.log("Received Credentials for Auth: ", email, password);
 
-        const user = await findOne({email: email});
+        const user = await userModel.findOne({email: email});
 
         if(!user)
         {
