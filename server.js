@@ -34,7 +34,7 @@ app.use(logInfo);
 
 
 //Authentication using email and password
-passport.use(new localStrategy(async (email, password, done) => {
+passport.use(new localStrategy ({ usernameField: 'email', passwordField: 'password' }, async (email, password, done) => {
 
     try
     {
