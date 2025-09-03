@@ -34,13 +34,27 @@ app.use(logInfo);
 
 
 //Authentication using email and password
-passport.use(new localStrategy (async (username, password, done) => {
+passport.use(new localStrategy (
+    {
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true
+  },
+  
+  async (req, email, password, done) => {
 
     try
     {
-        console.log("Received Credentials for Auth: ", username, password);
 
-        const user = await userModel.findOne({email: username});
+        if (req.method === "GET")
+        {
+            email = req.query.email;
+            password = req.query.password;
+        }
+
+        console.log("Received Credentials for Auth: ", email, password);
+
+        const user = await userModel.findOne({email: email});
 
         if(!user)
         {
