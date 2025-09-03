@@ -34,51 +34,39 @@ app.use(logInfo);
 
 
 //Authentication using email and password
-passport.use(new localStrategy (
+passport.use(new LocalStrategy(
     {
-    usernameField: 'email',
-    passwordField: 'password',
-    passReqToCallback: true
-  },
+      usernameField: 'username',   // match what you send in Postman
+      passwordField: 'password',
+      passReqToCallback: true
+    },
+    async (req, username, password, done) => {
+      try {
+        // if GET, take from query
+        if (req.method === "GET") {
+          username = req.query.username;
+          password = req.query.password;
+        }
   
-  async (req, email, password, done) => {
-
-    try
-    {
-
-        if (req.method === "GET")
-        {
-            email = req.query.email;
-            password = req.query.password;
+        console.log("Received credentials:", username, password);
+  
+        const user = await userModel.findOne({ email: username });
+        if (!user) {
+          return done(null, false, { message: "User not found" });
         }
-
-        console.log("Received Credentials for Auth: ", email, password);
-
-        const user = await userModel.findOne({email: email});
-
-        if(!user)
-        {
-            return done(null, false, {message: 'User not found'});
+  
+        const isValidPassword = user.password === password;
+        if (isValidPassword) {
+          return done(null, user);
+        } else {
+          return done(null, false, { message: "Invalid password" });
         }
-        
-        const isValidPassword = user.password === password ? true : false;
-
-        if(isValidPassword)
-        {
-            return done(null, user);
-        }
-        else
-        {
-            return done(null, false, {message: 'Invalid Password'});
-        }
-
-    }
-    catch(err)
-    {
+  
+      } catch (err) {
         return done(err);
+      }
     }
-
-}));
+  ));
 
 app.use(passport.initialize());
 
