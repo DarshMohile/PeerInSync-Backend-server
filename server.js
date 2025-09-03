@@ -34,7 +34,7 @@ app.use(logInfo);
 
 
 //Authentication using email and password
-passport.use(new LocalStrategy(
+passport.use(new localStrategy(
     {
       usernameField: 'username',   // match what you send in Postman
       passwordField: 'password',
