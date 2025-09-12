@@ -68,11 +68,11 @@ passport.use(new localStrategy(
     }
   ));
 
-app.use(passport.initialize());
+// app.use(passport.initialize());
 
 
 //Server root or homepage
-app.get('/', passport.authenticate('local', {session: false}), (req, res) => {
+app.get('/', /*passport.authenticate('local', {session: false}),*/ (req, res) => {
 
     try
     {
