@@ -20,16 +20,18 @@ passport.use(new localStrategy(
         //   password = req.query.password;
         // }
   
-        console.log("Received credentials:", username, password);
+        console.log("Received credentials:", username, passwd);
   
         const user = await userModel.findOne({ username });
-        
+
         if (!user) 
         {
           return done(null, false, { message: "Invalid Credentials" });
         }
+
+        console.log('user found: ' +  user.fName);
   
-        const isValidPassword = user.password === password ? true : false;
+        const isValidPassword = user.password === passwd ? true : false;
         if (isValidPassword) 
         {
           return done(null, user);
