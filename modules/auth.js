@@ -10,13 +10,15 @@ passport.use(new localStrategy(
     //   passwordField: 'password',
     //   passReqToCallback: true
     // },
-    async (req, username, password, done) => {
+    async (/*req,*/ username, password, done) => {
+      //req, username, password, done) => {
+        
       try {
         // if GET, take from query
-        if (req.method === "GET") {
-          username = req.query.username;
-          password = req.query.password;
-        }
+        // if (req.method === "GET") {
+        //   username = req.query.username;
+        //   password = req.query.password;
+        // }
   
         console.log("Received credentials:", username, password);
   

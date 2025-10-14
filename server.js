@@ -12,15 +12,12 @@ const port = process.env.PORT || 3000;
 
 require('dotenv').config();
 require('./modules/databaseLink');
-
-
+require('./modules/Auth');
 app.use(express.json());
 app.use(cors());
 app.set('trust proxy', true);
 app.use(express.static(path.join(__dirname, 'rootPage')));
-app.use(passport.initialize());
 
-const authMiddleWare = passport.authenticate('local', {session: false});
 
 
 //Log the details of every request that comes to backend
@@ -32,6 +29,10 @@ const logInfo = (req, res, next) => {
     next();
 }
 app.use(logInfo);
+
+
+app.use(passport.initialize());
+const authMiddleWare = passport.authenticate('local', {session: false});
 
 
 //Server root or homepage
