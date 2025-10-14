@@ -12,7 +12,7 @@ const port = process.env.PORT || 3000;
 
 require('dotenv').config();
 require('./modules/databaseLink');
-require('./modules/Auth');
+require('./modules/auth');
 app.use(express.json());
 app.use(cors());
 app.set('trust proxy', true);
