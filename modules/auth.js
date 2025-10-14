@@ -24,6 +24,8 @@ passport.use(new localStrategy(
   
         const user = await userModel.findOne({ username });
 
+        console.log("after finding user");
+
         if (!user) 
         {
           return done(null, false, { message: "Invalid Credentials" });
