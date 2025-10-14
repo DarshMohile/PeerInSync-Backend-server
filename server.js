@@ -4,12 +4,10 @@ const path = require('path');
 const app = express();
 const cors = require('cors');
 const passport = require('passport');
-const localStrategy = require('passport-local').Strategy;
-const userModel = require('./dataModels/userModel');
+const authMiddleWare = passport.authenticate('local', {session: false});
+
 
 const loginRegisterRoutes = require('./routes/loginRegister');
-const { findOne } = require('./dataModels/userModel');
-
 const port = process.env.PORT || 3000;
 
 require('dotenv').config();
@@ -20,6 +18,7 @@ app.use(express.json());
 app.use(cors());
 app.set('trust proxy', true);
 app.use(express.static(path.join(__dirname, 'rootPage')));
+app.use(passport.initialize());
 
 
 //Log the details of every request that comes to backend
@@ -33,46 +32,8 @@ const logInfo = (req, res, next) => {
 app.use(logInfo);
 
 
-//Authentication using email and password
-passport.use(new localStrategy(
-    {
-      usernameField: 'username',   // match what you send in Postman
-      passwordField: 'password',
-      passReqToCallback: true
-    },
-    async (req, username, password, done) => {
-      try {
-        // if GET, take from query
-        if (req.method === "GET") {
-          username = req.query.username;
-          password = req.query.password;
-        }
-  
-        console.log("Received credentials:", username, password);
-  
-        const user = await userModel.findOne({ email: username });
-        if (!user) {
-          return done(null, false, { message: "User not found" });
-        }
-  
-        const isValidPassword = user.password === password;
-        if (isValidPassword) {
-          return done(null, user);
-        } else {
-          return done(null, false, { message: "Invalid password" });
-        }
-  
-      } catch (err) {
-        return done(err);
-      }
-    }
-  ));
-
-// app.use(passport.initialize());
-
-
 //Server root or homepage
-app.get('/', /*passport.authenticate('local', {session: false}),*/ (req, res) => {
+app.get('/', authMiddleWare, (req, res) => {
 
     try
     {
