@@ -22,13 +22,14 @@ passport.use(new localStrategy(
   
         console.log("Received credentials:", username, password);
   
-        const user = await userModel.findOne({ email: username });
+        const user = await userModel.findOne({ username });
+        
         if (!user) 
         {
           return done(null, false, { message: "Invalid Credentials" });
         }
   
-        const isValidPassword = user.password === password;
+        const isValidPassword = user.password === password ? true : false;
         if (isValidPassword) 
         {
           return done(null, user);
@@ -36,8 +37,7 @@ passport.use(new localStrategy(
         else 
         {
           return done(null, false, { message: "Invalid Credentials" });
-        }
-  
+        }   
       } 
       catch (err) 
       {
