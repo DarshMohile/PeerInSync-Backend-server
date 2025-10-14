@@ -4,7 +4,7 @@ const path = require('path');
 const app = express();
 const cors = require('cors');
 const passport = require('passport');
-const authMiddleWare = passport.authenticate('local', {session: false});
+
 
 
 const loginRegisterRoutes = require('./routes/loginRegister');
@@ -19,6 +19,8 @@ app.use(cors());
 app.set('trust proxy', true);
 app.use(express.static(path.join(__dirname, 'rootPage')));
 app.use(passport.initialize());
+
+const authMiddleWare = passport.authenticate('local', {session: false});
 
 
 //Log the details of every request that comes to backend
