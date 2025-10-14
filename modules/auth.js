@@ -10,7 +10,7 @@ passport.use(new localStrategy(
     //   passwordField: 'password',
     //   passReqToCallback: true
     // },
-    async (/*req,*/ username, password, done) => {
+    async (/*req,*/ username, passwd, done) => {
       //req, username, password, done) => {
         
       try {
