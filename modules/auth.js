@@ -1,6 +1,6 @@
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
-const userModel = require('./dataModels/userModel');
+const userModel = require('../dataModels/userModel.js');
 
 
 //Authentication using email and password

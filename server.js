@@ -7,12 +7,12 @@ const passport = require('passport');
 
 
 
-const loginRegisterRoutes = require('./routes/loginRegister');
+const loginRegisterRoutes = require('./routes/loginRegister.js');
 const port = process.env.PORT || 3000;
 
 require('dotenv').config();
-require('./modules/databaseLink');
-require('./modules/auth');
+require('./modules/databaseLink.js');
+require('./modules/auth.js');
 app.use(express.json());
 app.use(cors());
 app.set('trust proxy', true);
