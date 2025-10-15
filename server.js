@@ -8,8 +8,6 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
 
-
-
 const loginRegisterRoutes = require('./routes/loginRegister.js');
 const port = process.env.PORT || 3000;
 
@@ -17,7 +15,7 @@ require('dotenv').config();
 require('./modules/databaseLink.js');
 require('./modules/auth.js');
 app.use(express.json());
-app.use(cors({credentials: true}));
+app.use(cors({origin: 'https://5174-firebase-peer-in-sync-1754039654181.cluster-w5vd22whf5gmav2vgkomwtc4go.cloudworkstations.dev', credentials: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'rootPage')));
 app.set('trust proxy', true);
@@ -45,8 +43,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-const authMiddleWare = passport.authenticate('local', {session: false});
 
 
 const isAuthenticated = (req, res, next) => {
@@ -87,7 +83,6 @@ app.get('/hello', (req, res) => {
 });
 
 app.use('/loginRegisterRoutes', loginRegisterRoutes);
-
 
 
 app.listen(port, () => {
