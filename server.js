@@ -19,8 +19,18 @@ require('./modules/auth.js');
 app.use(express.json());
 app.use(cors({credentials: true}));
 app.use(cookieParser());
-app.set('trust proxy', true);
 app.use(express.static(path.join(__dirname, 'rootPage')));
+app.set('trust proxy', true);
+
+//Log the details of every request that comes to backend
+const logInfo = (req, res, next) => {
+
+    const ip = req.header['x-forwarded-for'] || req.ip;
+
+    console.log(`[${new Date().toLocaleString()}] Incoming Request:\nClient IP: ${ip}\nClient Host Name: ${req.headers.origin}\nMethod: ${req.method}\nTo: ${req.originalUrl}\n`);
+    next();
+}
+app.use(logInfo);
 
 
 app.use(session({
@@ -37,17 +47,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const authMiddleWare = passport.authenticate('local', {session: false});
-
-
-//Log the details of every request that comes to backend
-const logInfo = (req, res, next) => {
-
-    const ip = req.header['x-forwarded-for'] || req.ip;
-
-    console.log(`[${new Date().toLocaleString()}] Incoming Request:\nClient IP: ${ip}\nClient Host Name: ${req.headers.origin}\nMethod: ${req.method}\nTo: ${req.originalUrl}\n`);
-    next();
-}
-app.use(logInfo);
 
 
 const isAuthenticated = (req, res, next) => {
