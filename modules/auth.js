@@ -33,7 +33,8 @@ passport.use(new localStrategy(
 
         console.log('user found: ' +  user.fName);
   
-        const isValidPassword = user.password === passwd ? true : false;
+        const isValidPassword = user.comparePassword(passwd);
+        
         if (isValidPassword) 
         {
           return done(null, user);

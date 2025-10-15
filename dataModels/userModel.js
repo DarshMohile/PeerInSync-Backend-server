@@ -61,8 +61,9 @@ const userSchema = new mongoose.Schema({
 
     current_year_of_study:{
 
-        type: Number,
-        required: true
+        type: String,
+        required: true,
+        enum: ['1st Year', '2nd Year', '3rd Year', '4th Year', 'graduated']
     },
 
     gender:{
@@ -81,17 +82,17 @@ const userSchema = new mongoose.Schema({
     
 }, {collection: "usermodels"});
 
-/*userSchema.pre('save', async () => {
+userSchema.pre('save', async () => {
     
     if(!this.isModified('password'))
-        {
-            return next();
-        }
+    {
+        return next();
+    }
 
     try
     {
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hashPassword(this.password, salt);
+        const hashedPassword = await bcrypt.hash(this.password, salt);
         this.password = hashedPassword;
 
         next();
@@ -100,8 +101,22 @@ const userSchema = new mongoose.Schema({
     {
         return next(e);
     }
-})*/
+})
 
 
 const userModel = mongoose.model('userModel', userSchema);
+
+userModel.schema.methods.comparePassword = async (candidatePassword) => {
+
+    try
+    {
+        const isMatch = await bcrypt.compare(candidatePassword, this.password);
+        return isMatch;
+    }
+    catch(e)
+    {
+        throw err;
+    }
+};
+
 module.exports = userModel;
