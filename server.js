@@ -4,6 +4,9 @@ const path = require('path');
 const app = express();
 const cors = require('cors');
 const passport = require('passport');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+
 
 
 
@@ -14,10 +17,26 @@ require('dotenv').config();
 require('./modules/databaseLink.js');
 require('./modules/auth.js');
 app.use(express.json());
-app.use(cors());
+app.use(cors({credentials: true}));
+app.use(cookieParser());
 app.set('trust proxy', true);
 app.use(express.static(path.join(__dirname, 'rootPage')));
 
+
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'mysecret', // secret to encrypt session ID
+    resave: false,  // don’t save session if nothing changed
+    saveUninitialized: false, // don’t create empty sessions
+    cookie: {
+        httpOnly: true, // cookie cannot be accessed via JS in browser (more secure)
+        maxAge: 1000 * 60 * 60 * 24 // cookie expires after 1 day
+    }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+const authMiddleWare = passport.authenticate('local', {session: false});
 
 
 //Log the details of every request that comes to backend
@@ -31,12 +50,16 @@ const logInfo = (req, res, next) => {
 app.use(logInfo);
 
 
-app.use(passport.initialize());
-const authMiddleWare = passport.authenticate('local', {session: false});
+const isAuthenticated = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        return next(); // user is logged in
+    }
+    res.status(401).json({ msg: "You must log in first" });
+}
 
 
 //Server root or homepage
-app.get('/', authMiddleWare, (req, res) => {
+app.get('/', isAuthenticated, (req, res) => {
 
     try
     {

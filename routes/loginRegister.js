@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 const userModel = require('../dataModels/userModel');
+const passport = require('passport');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -43,23 +44,37 @@ router.post('/signup', async (req, res) => {
 });
 
 
-// router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
 
-//     try
-//     {
-//         const query = req.body.email;
-//         const password = req.body.password;
+    passport.authenticate('local', (err, user, info) => {
 
-        
-//     }
-//     catch(err)
-//     {
-//         console.log(err.message);
-//         res.status(500).json({error: 'Internal Server Error.'});
-//     }
+        if(err)
+        {
+            return res.status(500).json({ msg: "Server error", error: err });
+        }
+
+        if(!user)
+        {
+            return res.status(400).json({ msg: "Invalid credentials" });
+        }
+
+        req.logIn(user, (err) => { // logs user in and creates session cookie
+
+        if (err)
+        {
+            return res.status(500).json({ msg: "Login failed", error: err });
+        }
+
+            res.status(200).json({ msg: "Logged in successfully" }); // cookie sent automatically
+        });
+    })(req, res, next);
+});
 
 
-// });
-
+router.post('/logout', (req, res) => {
+    req.logout(() => { // Passport clears the session cookie
+        res.status(200).json({ msg: "Logged out successfully" });
+    });
+});
 
 module.exports = router;
