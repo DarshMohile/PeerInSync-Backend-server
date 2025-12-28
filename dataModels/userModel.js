@@ -104,8 +104,6 @@ userSchema.pre('save', async function (next) {
 })
 
 
-const userModel = mongoose.model('userModel', userSchema);
-
 userModel.schema.methods.comparePassword = async function (candidatePassword) {
 
     try
@@ -118,5 +116,7 @@ userModel.schema.methods.comparePassword = async function (candidatePassword) {
         throw err;
     }
 };
+
+const userModel = mongoose.model('userModel', userSchema);
 
 module.exports = userModel;
