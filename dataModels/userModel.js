@@ -82,7 +82,7 @@ const userSchema = new mongoose.Schema({
     
 }, {collection: "usermodels"});
 
-userSchema.pre('save', async function next() {
+userSchema.pre('save', async function (next) {
     
     if(!this.isModified('password'))
     {
@@ -106,7 +106,7 @@ userSchema.pre('save', async function next() {
 
 const userModel = mongoose.model('userModel', userSchema);
 
-userModel.schema.methods.comparePassword = async (candidatePassword) => {
+userModel.schema.methods.comparePassword = async function (candidatePassword) {
 
     try
     {
