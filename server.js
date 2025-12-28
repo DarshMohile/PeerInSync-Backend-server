@@ -28,16 +28,11 @@ app.use(logInfo);
 app.use(passport.initialize());
 
 
-const isAuthenticated = (req, res, next) => {
-    // if (req.isAuthenticated()) {
-    //     return next(); // user is logged in
-    // }
-    // res.status(401).json({ msg: "You must log in first" });
-}
+const Authentication = passport.authenticate('local', {session : false});
 
 
 //Server root or homepage
-app.get('/', (req, res) => {
+app.get('/', Authentication,(req, res) => {
 
     try
     {
