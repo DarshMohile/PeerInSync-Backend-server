@@ -15,7 +15,7 @@ require('dotenv').config();
 require('./modules/databaseLink.js');
 require('./modules/auth.js');
 app.use(express.json());
-app.use(cors());
+app.use(cors({origin: process.env.FRONTEND_URL, credentials: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'rootPage')));
 app.set('trust proxy', true);
