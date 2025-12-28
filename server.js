@@ -5,7 +5,6 @@ const app = express();
 const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
-const cookieParser = require('cookie-parser');
 
 
 const loginRegisterRoutes = require('./routes/loginRegister.js');
@@ -15,8 +14,7 @@ require('dotenv').config();
 require('./modules/databaseLink.js');
 require('./modules/auth.js');
 app.use(express.json());
-app.use(cors({origin: process.env.FRONTEND_URL, credentials: true}));
-app.use(cookieParser());
+app.use(cors({origin: true, credentials: true}));
 app.use(express.static(path.join(__dirname, 'rootPage')));
 app.set('trust proxy', true);
 
