@@ -13,7 +13,6 @@ require('./modules/databaseLink.js');
 require('./modules/auth.js');
 app.use(express.json());
 app.use(cors({origin: true, credentials: true}));
-app.options('*', cors({ origin: true, credentials: true }));
 app.use(express.static(path.join(__dirname, 'rootPage')));
 app.set('trust proxy', true);
 
