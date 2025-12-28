@@ -22,7 +22,7 @@ passport.use(new localStrategy(
 
 
         console.log('user found: ' +  user.fName);
-        const isValidPassword = user.password === password ? true : false;
+        const isValidPassword = await user.comparePassword(password);
         
 
         if (isValidPassword) 
