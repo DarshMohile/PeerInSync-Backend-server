@@ -6,12 +6,12 @@ const userModel = require('../dataModels/userModel.js');
 //Authentication using email and password
 passport.use(new localStrategy(
   
-    async (username, passwd, done) => {
+    async (username, password, done) => {
   
       try {
   
         console.log("Received credentials:", username, password);
-        const user = await userModel.findOne({ username });
+        const user = await userModel.findOne({ email: username });
         console.log("after finding user");
 
 

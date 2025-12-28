@@ -32,7 +32,7 @@ const Authentication = passport.authenticate('local', {session : false});
 
 
 //Server root or homepage
-app.get('/', Authentication,(req, res) => {
+app.get('/', Authentication, (req, res) => {
 
     try
     {
