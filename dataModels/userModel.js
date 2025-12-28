@@ -63,7 +63,7 @@ const userSchema = new mongoose.Schema({
 
         type: String,
         required: true,
-        enum: ['1st year', '2nd year', '3rd year', '4th year', 'graduated']
+        enum: ['1', '2', '3', '4', 'grad']
     },
 
     gender:{
