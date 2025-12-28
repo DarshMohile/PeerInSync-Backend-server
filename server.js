@@ -15,7 +15,7 @@ require('dotenv').config();
 require('./modules/databaseLink.js');
 require('./modules/auth.js');
 app.use(express.json());
-app.use(cors({origin: 'https://5174-firebase-peer-in-sync-1754039654181.cluster-w5vd22whf5gmav2vgkomwtc4go.cloudworkstations.dev', credentials: true}));
+app.use(cors());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'rootPage')));
 app.set('trust proxy', true);

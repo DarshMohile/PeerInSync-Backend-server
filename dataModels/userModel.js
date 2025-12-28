@@ -82,7 +82,7 @@ const userSchema = new mongoose.Schema({
     
 }, {collection: "usermodels"});
 
-userSchema.pre('save', async () => {
+userSchema.pre('save', async function next() {
     
     if(!this.isModified('password'))
     {
