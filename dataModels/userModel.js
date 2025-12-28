@@ -104,7 +104,7 @@ userSchema.pre('save', async function (next) {
 })
 
 
-userModel.schema.methods.comparePassword = async function (candidatePassword) {
+userSchema.methods.comparePassword = async function (candidatePassword) {
 
     try
     {
