@@ -11,7 +11,7 @@ passport.use(new localStrategy(
       try {
   
         console.log("Received credentials:", username, password);
-        const user = await userModel.findOne({ email: username });
+        const user = await userModel.findOne({ email: username }).select('+password');
         console.log("after finding user");
 
 
