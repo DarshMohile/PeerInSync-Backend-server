@@ -23,8 +23,6 @@ passport.use(new localStrategy(
 
         console.log('user found: ' +  user.fName);
 
-        console.log(Object.getOwnPropertyNames(Object.getPrototypeOf(user)));
-
         const isValidPassword = await user.comparePassword(password);
         
 
