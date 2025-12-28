@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 8,
         maxlength: 16,
-        select: false
+        //select: true
     },
     
     mobile_no:{
@@ -113,7 +113,7 @@ userModel.schema.methods.comparePassword = async function (candidatePassword) {
         const isMatch = await bcrypt.compare(candidatePassword, this.password);
         return isMatch;
     }
-    catch(e)
+    catch(err)
     {
         throw err;
     }
