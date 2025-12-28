@@ -54,7 +54,7 @@ const isAuthenticated = (req, res, next) => {
 
 
 //Server root or homepage
-app.get('/', isAuthenticated, (req, res) => {
+app.get('/', (req, res) => {
 
     try
     {

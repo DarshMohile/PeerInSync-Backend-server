@@ -59,11 +59,4 @@ router.post('/login', async (req, res, next) => {
     })(req, res, next);
 });
 
-
-router.post('/logout', (req, res) => {
-    req.logout(() => { // Passport clears the session cookie
-        res.status(200).json({ msg: "Logged out successfully" });
-    });
-});
-
 module.exports = router;
