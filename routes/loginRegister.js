@@ -42,6 +42,46 @@ router.post('/signup', async (req, res) => {
 
 router.post('/login', async (req, res, next) => {
     
+    try
+    {
+        const data = req.body;
+
+        const mappedData = {
+            email: data.email,
+            password: data.password,
+        }
+
+        console.log('Received Credentials: ', mappedData); //for testing, debugging
+
+        const user = await userModel.findOne({ email: mappedData.email });
+
+        if (!user) 
+        {
+            console.log('Error receiving data: ', err.message);
+            res.status(500).json({msg: 'Invalid Credentials', error: err.message});
+        }
+        else
+        {
+            console.log('user found: ' +  user.fName);
+            const isValidPassword = await user.comparePassword(mappedData.password);
+
+            if (isValidPassword) 
+            {
+                res.status(200).json({name: user.fName + " " + user.lName});
+            } 
+            else 
+            {
+                return done(null, false, { message: "Invalid Credentials" });
+            }
+        }
+        
+        res.status(200).json({msg: 'registered successfully'});
+    }
+    catch(err)
+    {
+        console.log('Error receiving data: ', err.message);
+        res.status(500).json({msg: 'something went wrong', error: err.message});
+    }
     
 });
 
