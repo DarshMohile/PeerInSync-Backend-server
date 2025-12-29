@@ -6,6 +6,7 @@ const cors = require('cors');
 const passport = require('passport');
 
 const loginRegisterRoutes = require('./routes/loginRegister.js');
+const helpDesk = require('./routes/helpDesk.js');
 const port = process.env.PORT || 3000;
 
 require('dotenv').config();
@@ -61,6 +62,7 @@ app.get('/hello', (req, res) => {
 });
 
 app.use('/loginRegisterRoutes', loginRegisterRoutes);
+app.use('/help', helpDesk);
 
 
 app.listen(port, () => {
