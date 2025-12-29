@@ -40,7 +40,7 @@ router.post('/signup', async (req, res) => {
 });
 
 
-router.post('/login', async (req, res, next) => {
+router.post('/login', async (req, res) => {
     
     try
     {
@@ -53,12 +53,12 @@ router.post('/login', async (req, res, next) => {
 
         console.log('Received Credentials: ', mappedData); //for testing, debugging
 
-        const user = await userModel.findOne({ email: mappedData.email });
+        const user = await userModel.findOne({ email: mappedData.email }).select('+password');
 
         if (!user) 
         {
-            console.log('Error receiving data: ', err.message);
-            res.status(500).json({msg: 'Invalid Credentials', error: err.message});
+            console.log('Error receiving data');
+            res.status(500).json({msg: 'Invalid Credentials'});
         }
         else
         {
@@ -71,11 +71,9 @@ router.post('/login', async (req, res, next) => {
             } 
             else 
             {
-                return done(null, false, { message: "Invalid Credentials" });
+                res.status(500).json({msg: 'Invalid Credentials'});
             }
         }
-        
-        res.status(200).json({msg: 'registered successfully'});
     }
     catch(err)
     {
