@@ -42,17 +42,7 @@ router.post('/signup', async (req, res) => {
 
 router.post('/login', async (req, res, next) => {
     
-    passport.authenticate('local', (err, user, info) => {
-
-        if(err) return res.status(500).json({ msg: "Server error", error: err });
-        if(!user) return res.status(400).json({ msg: "Invalid credentials" });
-
-        req.logIn(user, (err) => {
-            if (err) return res.status(500).json({ msg: "Login failed", error: err });
-            res.status(200).json({ msg: "Logged in successfully" });
-        });
-
-    })(req, res, next);
+    
 });
 
 module.exports = router;
