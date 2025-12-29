@@ -67,7 +67,11 @@ router.post('/login', async (req, res) => {
 
             if (isValidPassword) 
             {
-                res.status(200).json({name: user.fName + " " + user.lName, email: user.email});
+                res.status(200).json({
+                    uniqid: user._id,
+                    name: user.fName + " " + user.lName,
+                    email: user.email
+                });
             } 
             else 
             {
@@ -82,5 +86,30 @@ router.post('/login', async (req, res) => {
     }
     
 });
+
+router.delete('/delete/:id', async (req, res) => {
+
+    try
+    {
+        const userId = req.params.id;   //extract unique user id from request parameters
+
+        const response = await userModel.findByIdAndDelete(userId);
+
+        if(!response)   //If the specified record is not found
+        {
+            console.log('::Failed to delete data. Specified id not found.\n');
+            return res.status(404).json({err: 'User not found.'});
+        }
+        
+        console.log('::Data deleted successfully');
+        res.status(200).json(response);
+    }
+
+    catch(err)
+    {
+        console.log('::Error accessing the data from database: ' + err + '\n');
+        res.status(500).json({error : 'Internal Server Error.'});
+    }
+})
 
 module.exports = router;
