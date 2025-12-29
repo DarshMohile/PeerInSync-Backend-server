@@ -67,7 +67,7 @@ router.post('/login', async (req, res) => {
 
             if (isValidPassword) 
             {
-                res.status(200).json({name: user.fName + " " + user.lName});
+                res.status(200).json({name: user.fName + " " + user.lName, email: user.email});
             } 
             else 
             {
