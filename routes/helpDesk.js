@@ -23,7 +23,7 @@ router.post('/help', async (req, res) => {
         let newTicket = new helpTicket(mappedData);
         await newTicket.save();
         
-        res.status(200).json({msg: 'registered successfully'});
+        res.status(200).json({msg: 'Ticket Recorded successfully'});
     }
     catch(err)
     {
