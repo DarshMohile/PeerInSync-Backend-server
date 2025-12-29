@@ -62,7 +62,7 @@ app.get('/hello', (req, res) => {
 });
 
 app.use('/loginRegisterRoutes', loginRegisterRoutes);
-app.use('/help', helpDesk);
+app.use('/helpDesk', helpDesk);
 
 
 app.listen(port, () => {
