@@ -3,7 +3,10 @@
 const express = require('express');
 const router = express.Router();
 const userModel = require('../dataModels/userModel');
-const passport = require('passport');
+const {jwtAuth, generateToken} = require('../modules/jwt');
+
+module.exports = router;
+
 
 router.post('/signup', async (req, res) => {
 
@@ -29,8 +32,17 @@ router.post('/signup', async (req, res) => {
 
         let newUser = new userModel(mappedData);
         await newUser.save();
+
+        const payload = {
+            id: newUser._id,
+            email: newUser.email
+        }
+
+
+        const token = generateToken(payload);
+        console.log('Token Saved. token: ', token);
         
-        res.status(200).json({msg: 'registered successfully'});
+        res.status(200).json({msg: 'registered successfully', token: token});
     }
     catch(err)
     {
