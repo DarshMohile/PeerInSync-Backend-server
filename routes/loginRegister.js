@@ -34,10 +34,10 @@ router.post('/signup', async (req, res) => {
         await newUser.save();
 
         const payload = {
-            id: newUser._id,
-            email: newUser.email
-        }
-
+            id: user._id,
+            email: user.email,
+            role: user.role
+        };
 
         const token = generateToken(payload);
         console.log('Token Saved. token: ', token);
@@ -70,30 +70,33 @@ router.post('/login', async (req, res) => {
         if (!user) 
         {
             console.log('Error receiving data');
-            res.status(500).json({msg: 'Invalid Credentials'});
+            return res.status(401).json({msg: 'Invalid Credentials'});
         }
-        else
-        {
-            console.log('user found: ' +  user.fName);
-            const isValidPassword = await user.comparePassword(mappedData.password);
 
-            if (isValidPassword) 
-            {
-                res.status(200).json({
-                    uniqid: user._id,
-                    name: user.fName + " " + user.lName,
-                    email: user.email
-                });
-            } 
-            else 
-            {
-                res.status(500).json({msg: 'Invalid Credentials'});
-            }
+        console.log('user found: ' +  user.fName);
+        const isValidPassword = await user.comparePassword(mappedData.password);
+
+        if (isValidPassword) 
+        {
+            const payload = {
+                id: user._id,
+                email: user.email,
+                role: user.role
+            };
+
+            const token = generateToken(payload);
+
+            return res.status(200).json({msg: 'logged in successfully', token: token});
+        } 
+        else 
+        {
+            res.status(401).json({msg: 'Invalid Credentials'});
         }
+    
     }
     catch(err)
     {
-        console.log('Error receiving data: ', err.message);
+        console.log('Error logging in: ', err.message);
         res.status(500).json({msg: 'something went wrong', error: err.message});
     }
     
