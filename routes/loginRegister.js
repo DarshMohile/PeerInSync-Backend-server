@@ -96,7 +96,7 @@ router.post('/login', async (req, res) => {
                 secure: true,
                 sameSite: 'none',
                 maxAge: 24 * 60 * 60 * 1000}
-            ).json({msg: 'registered successfully'});
+            ).json({msg: 'logged in successfully'});
         } 
         else 
         {

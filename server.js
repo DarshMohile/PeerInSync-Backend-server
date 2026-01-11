@@ -3,6 +3,8 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
+
 
 const loginRegisterRoutes = require('./routes/loginRegister.js');
 const helpDesk = require('./routes/helpDesk.js');
@@ -16,6 +18,7 @@ require('./modules/auth.js');
 app.use(express.json());
 app.use(cors({origin: true, credentials: true}));
 app.use(express.static(path.join(__dirname, 'rootPage')));
+app.use(cookieParser());
 app.set('trust proxy', true);
 
 //Log the details of every request that comes to backend
