@@ -3,9 +3,10 @@
 const express = require('express');
 const router = express.Router();
 const helpTicket = require('../dataModels/helpTicketModel');
+const { jwtAuth } = require('../modules/jwt');
 
 
-router.post('/help', async (req, res) => {
+router.post('/help', jwtAuth ,async (req, res) => {
 
     try
     {

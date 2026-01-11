@@ -3,15 +3,16 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const cors = require('cors');
-const passport = require('passport');
 
 const loginRegisterRoutes = require('./routes/loginRegister.js');
 const helpDesk = require('./routes/helpDesk.js');
+const me = require('./routes/me.js');
 const port = process.env.PORT || 3000;
 
 require('dotenv').config();
 require('./modules/databaseLink.js');
 require('./modules/auth.js');
+
 app.use(express.json());
 app.use(cors({origin: true, credentials: true}));
 app.use(express.static(path.join(__dirname, 'rootPage')));
@@ -26,14 +27,10 @@ const logInfo = (req, res, next) => {
     next();
 }
 app.use(logInfo);
-app.use(passport.initialize());
-
-
-const Authentication = passport.authenticate('local', {session : false});
 
 
 //Server root or homepage
-app.get('/', /*Authentication,*/ (req, res) => {
+app.get('/', (req, res) => {
 
     try
     {
@@ -56,13 +53,13 @@ app.get('/hello', (req, res) => {
     }
     catch(err)
     {
-        console.log('Error displaying root page: ', err);
         res.status(500).json({msg: 'something went wrong'});
     }
 });
 
 app.use('/loginRegisterRoutes', loginRegisterRoutes);
 app.use('/helpDesk', helpDesk);
+app.use('/me', me);
 
 
 app.listen(port, () => {

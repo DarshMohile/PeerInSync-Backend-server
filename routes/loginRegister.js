@@ -35,14 +35,19 @@ router.post('/signup', async (req, res) => {
 
         const payload = {
             id: user._id,
-            email: user.email,
             role: user.role
         };
 
         const token = generateToken(payload);
         console.log('Token Saved. token: ', token);
         
-        res.status(200).json({msg: 'registered successfully', token: token});
+        //res.status(200).json({msg: 'registered successfully', token: token});
+        res.status(200).cookie('token', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+            maxAge: 24 * 60 * 60 * 1000}
+        ).json({msg: 'registered successfully'});
     }
     catch(err)
     {
@@ -86,7 +91,12 @@ router.post('/login', async (req, res) => {
 
             const token = generateToken(payload);
 
-            return res.status(200).json({msg: 'logged in successfully', token: token});
+            return res.status(200).cookie('token', token, {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'none',
+                maxAge: 24 * 60 * 60 * 1000}
+            ).json({msg: 'registered successfully'});
         } 
         else 
         {
@@ -102,11 +112,11 @@ router.post('/login', async (req, res) => {
     
 });
 
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete', jwtAuth ,async (req, res) => {
 
     try
     {
-        const userId = req.params.id;   //extract unique user id from request parameters
+        const userId = req.user.id;   //extract unique user id from request parameters
 
         const response = await userModel.findByIdAndDelete(userId);
 

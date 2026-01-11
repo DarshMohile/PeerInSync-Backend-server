@@ -2,12 +2,12 @@ const jwt = require('jsonwebtoken');
 
 const jwtAuth = (req, res, next) => {
 
-    //extract the jwt token from req header
-    const token = req.headers.authorization.split(' ')[1];
+    //check if the headers have authorization token
+    const token = req.cookies.token;
 
     if(!token)
     {
-        return res.status(401).json({msg: 'Unauthorized'});
+        return res.status(401).json({msg: 'You are not logged in.'});
     }
 
     try
@@ -26,7 +26,7 @@ const jwtAuth = (req, res, next) => {
 
 const generateToken = (userData) => {
 
-    return jwt.sign(userData, process.env.JWT_SECRET);
+    return jwt.sign(userData, process.env.JWT_SECRET, {expiresIn: '24h'});
 }
 
 
