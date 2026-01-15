@@ -7,7 +7,7 @@ const userModel = require('../dataModels/userModel');
 router.get('/me', jwtAuth, async (req, res) => {
 
     const uid = req.user.id;
-    const user = await userModel.findOne({ email: uid })
+    const user = await userModel.findOne({ _id: uid })
 
     if (!user) 
     {
