@@ -91,12 +91,12 @@ router.post('/login', async (req, res) => {
 
             const token = generateToken(payload);
 
-            return res.status(200).cookie('token', token, {
+            res.status(200).cookie('token', token, {
                 httpOnly: true,
                 secure: true,
                 sameSite: 'none',
-                maxAge: 24 * 60 * 60 * 1000}
-            ).json({msg: 'logged in successfully'});
+                maxAge: 24 * 60 * 60 * 1000
+            }).json({msg: 'logged in successfully'});
         } 
         else 
         {

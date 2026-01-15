@@ -2,6 +2,8 @@ const express = require('express');
 const { jwtAuth } = require('../modules/jwt');
 const router = express.Router();
 
+const userModel = require('../dataModels/userModel');
+
 router.get('/me', jwtAuth, async (req, res) => {
 
     const uid = req.user.id;
