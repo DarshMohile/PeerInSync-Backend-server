@@ -34,8 +34,7 @@ router.post('/signup', async (req, res) => {
         await newUser.save();
 
         const payload = {
-            id: user._id,
-            role: user.role
+            id: newUser._id,
         };
 
         const token = generateToken(payload);
@@ -111,6 +110,13 @@ router.post('/login', async (req, res) => {
     }
     
 });
+
+router.post('/logout', jwtAuth ,(req, res) => {
+
+    res.clearCookie('token');
+    res.status(200).json({msg: 'logged out successfully'});
+});
+
 
 router.delete('/delete', jwtAuth ,async (req, res) => {
 

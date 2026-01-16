@@ -6,7 +6,7 @@ const helpTicket = require('../dataModels/helpTicketModel');
 const { jwtAuth } = require('../modules/jwt');
 
 
-router.post('/help', jwtAuth ,async (req, res) => {
+router.post('/help', async (req, res) => {
 
     try
     {
