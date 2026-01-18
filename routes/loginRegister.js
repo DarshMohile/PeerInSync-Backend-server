@@ -122,13 +122,12 @@ router.delete('/delete', jwtAuth ,async (req, res) => {
 
     try
     {
-        const userId = req.user.id;   //extract unique user id from request parameters
-
+        const userId = req.user.id;
         const response = await userModel.findByIdAndDelete(userId);
 
-        if(!response)   //If the specified record is not found
+        if(!response)  
         {
-            console.log('::Failed to delete data. Specified id not found.\n');
+            console.log('::Failed to delete data. Specified id was not found.\n');
             return res.status(404).json({err: 'User not found.'});
         }
         
