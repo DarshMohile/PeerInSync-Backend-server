@@ -132,6 +132,8 @@ router.delete('/delete', jwtAuth ,async (req, res) => {
         }
         
         console.log('::Data deleted successfully');
+    
+        res.clearCookie('token');
         res.status(200).json(response);
     }
 
