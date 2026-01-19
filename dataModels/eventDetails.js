@@ -17,7 +17,7 @@ const eventDetailSchema = new mongoose.Schema({
     description: {
 
         type: String,
-        required: true
+        required: false
     },
 
     date_time: {
@@ -35,7 +35,7 @@ const eventDetailSchema = new mongoose.Schema({
     loc_link: {
 
         type: String,
-        required: true,
+        required: false,
     }
 });
 
