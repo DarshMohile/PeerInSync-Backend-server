@@ -29,7 +29,7 @@ const eventDetailSchema = new mongoose.Schema({
     event_type: {
 
         type: String,
-        required: true,
+        required: true, 
     },
 
     loc_link: {

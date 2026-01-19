@@ -9,6 +9,7 @@ const cookieParser = require('cookie-parser');
 const loginRegisterRoutes = require('./routes/loginRegister.js');
 const helpDesk = require('./routes/helpDesk.js');
 const me = require('./routes/me.js');
+const events = require('./routes/events.js');
 const port = process.env.PORT || 3000;
 
 require('dotenv').config();
@@ -63,6 +64,7 @@ app.get('/hello', (req, res) => {
 app.use('/loginRegisterRoutes', loginRegisterRoutes);
 app.use('/helpDesk', helpDesk);
 app.use('/me', me);
+app.use('/events', events);
 
 
 app.listen(port, () => {

@@ -1,5 +1,3 @@
-//Routes to handle login and signUp requests
-
 const express = require('express');
 const router = express.Router();
 const helpTicket = require('../dataModels/helpTicketModel');
