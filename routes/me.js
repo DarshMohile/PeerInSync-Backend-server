@@ -30,7 +30,7 @@ router.put('/update', jwtAuth, async (req, res) => {
 
             new: true,  //return the updated data
             runValidators: true     //Check all validations (like required field, not NULL etc...)
-        });
+        }).select('-password');
 
         if(!response)   //If the specified record is not found
         {
