@@ -36,8 +36,17 @@ const eventDetailSchema = new mongoose.Schema({
 
         type: String,
         required: false,
-    }
+    },
+
+    maxParticipants: {
+
+        type: Number,
+        default: null,
+        min: 0
+    },
+
+    participants: [],
 });
 
-const eventDetailModel = mongoose.model('eventDetailModel', eventDetailSchema);
-module.exports = eventDetailModel;
+const eventModel = mongoose.model('eventDetailModel', eventDetailSchema);
+module.exports = eventModel;

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const eventModel = require('../dataModels/eventDetails');
+const eventModel = require('../dataModels/eventModel');
 const { jwtAuth } = require('../modules/jwt');
 
 
@@ -35,6 +35,20 @@ router.post('/create', jwtAuth, async (req, res) => {
     {
         console.log('Error receiving data: ', err.message);
         res.status(500).json({msg: 'something went wrong', error: err.message});
+    }
+});
+
+
+router.get('/getEvents', jwtAuth, async(req, res) => {
+
+    try
+    {
+        
+    }
+    catch(e)
+    {
+        console.log('error sending event details: ', e.message);
+        res.status(500).json('something went wrong');
     }
 });
 
