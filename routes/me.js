@@ -40,7 +40,7 @@ router.put('/update', jwtAuth, async (req, res) => {
             role: data.role
         }
 
-        const response = await User.findByIdAndUpdate(uid, mappedData, {
+        const response = await userModel.findByIdAndUpdate(uid, mappedData, {
 
             new: true,  //return the updated data
             runValidators: true     //Check all validations (like required field, not NULL etc...)
