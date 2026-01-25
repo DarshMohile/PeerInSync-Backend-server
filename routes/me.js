@@ -26,7 +26,20 @@ router.put('/update', jwtAuth, async (req, res) => {
         const uid = req.user.id;
         const data = req.body;
 
-        const response = await userModel.findByIdAndUpdate(uid, data, {
+        const mappedData = {
+            fName: data.fName,
+            lName: data.lName,
+            email: data.email,
+            mobile_no: data.mobile_no,
+            college_name: data.college_name,
+            course_name: data.course_name,
+            branch: data.branch,
+            current_year_of_study: data.current_year_of_study,
+            gender: data.gender,
+            role: data.role
+        }
+
+        const response = await userModel.findByIdAndUpdate(uid, { $set: mappedData}, {
 
             new: true,  //return the updated data
             runValidators: false     //Check all validations (like required field, not NULL etc...)
