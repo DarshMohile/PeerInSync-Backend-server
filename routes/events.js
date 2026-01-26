@@ -75,6 +75,7 @@ router.post('/registerEvent/:eventID', jwtAuth, async(req, res) => {
 
         if (result.matchedCount === 0)
         {
+            console.log(result);
             return res.status(400).json('Event not found, already registered, or event is full');
         }
 

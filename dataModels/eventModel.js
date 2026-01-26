@@ -52,7 +52,7 @@ const eventDetailSchema = new mongoose.Schema({
         max: 50
     },
 
-    participants: [],
+    participants: [{type: mongoose.Schema.Types.ObjectId}]
 });
 
 const eventModel = mongoose.model('eventDetailModel', eventDetailSchema);
