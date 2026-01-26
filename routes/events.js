@@ -66,7 +66,12 @@ router.post('/registerEvent/:eventID', jwtAuth, async(req, res) => {
             {
                 _id: eventID,
                 participants: { $ne: uid },
-                $expr: { $lt: [{ $size: "$participants" }, "$maxParticipants"] }
+                $expr: {
+                    $or: [
+                      { $eq: ["$maxParticipants", 0] },
+                      { $lt: [{ $size: "$participants" }, "$maxParticipants"] }
+                    ]
+                  }
             },
             {
                 $addToSet: { participants: uid }
