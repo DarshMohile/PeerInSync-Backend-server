@@ -30,7 +30,7 @@ const eventDetailSchema = new mongoose.Schema({
 
     time: {
 
-        type: Ti,
+        type: String,
         required: true
     },
 
