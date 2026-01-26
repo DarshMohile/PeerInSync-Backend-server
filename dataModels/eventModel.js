@@ -20,10 +20,16 @@ const eventDetailSchema = new mongoose.Schema({
         required: false
     },
 
-    date_time: {
+    date: {
 
         type: String,
         required: true,
+    },
+
+    time: {
+
+        type: String,
+        required: true
     },
 
     event_type: {
