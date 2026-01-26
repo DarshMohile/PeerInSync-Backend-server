@@ -60,7 +60,7 @@ router.post('/registerEvent/:eventID', jwtAuth, async(req, res) => {
     try
     {
         const eventID = req.params.eventID;
-        const uid = req.user._id;
+        const uid = req.user.id;
 
         const result = await eventModel.updateOne(
             {
