@@ -48,7 +48,8 @@ const eventDetailSchema = new mongoose.Schema({
 
         type: Number,
         default: null,
-        min: 0
+        min: 0,
+        max: 50
     },
 
     participants: [],
