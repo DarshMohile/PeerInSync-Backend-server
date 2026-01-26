@@ -22,13 +22,15 @@ const eventDetailSchema = new mongoose.Schema({
 
     date: {
 
-        type: String,
+        type: Date,
         required: true,
+        min: '1900-01-01',
+        max: Date.now
     },
 
     time: {
 
-        type: String,
+        type: Ti,
         required: true
     },
 
