@@ -95,4 +95,27 @@ router.post('/registerEvent/:eventID', jwtAuth, async(req, res) => {
 });
 
 
+router.get('/myEvents', jwtAuth, async(req, res) => {
+
+    try
+    {
+        const uid = req.user.id;
+        const events = await eventModel.find({participants: uid});
+
+        if(!events)
+        {
+            return res.status(404).json({msg: 'No events found.'});
+        }
+        
+        res.status(200).json(events);
+
+    }
+    catch(err)
+    {
+        console.log('Error reading events: ', err);
+        res.status(500).json({msg: 'something went wrong'});
+    }
+});
+
+
 module.exports = router;
