@@ -6,15 +6,23 @@ const userModel = require('../dataModels/userModel');
 
 router.get('/me', jwtAuth, async (req, res) => {
 
-    const uid = req.user.id;
-    const user = await userModel.findOne({ _id: uid })
-
-    if (!user) 
+    try
     {
-        return res.status(404).json({msg: 'User Data Not Found'});
+        const uid = req.user.id;
+        const user = await userModel.findOne({ _id: uid })
+    
+        if (!user) 
+        {
+            return res.status(404).json({msg: 'User Data Not Found'});
+        }
+    
+        res.status(200).json(user);
     }
-
-    res.status(200).json(user);
+    catch(err)
+    {
+        console.log('Error sending userInfo: ', err);
+        res.status(500).json({msg: 'something went wrong'});
+    }
 
 });
 
@@ -60,6 +68,29 @@ router.put('/update', jwtAuth, async (req, res) => {
         res.status(500).json({error : 'Internal Server Error.'});
     }
 
+});
+
+
+router.get('/myEvents', jwtAuth, async(req, res) => {
+
+    try
+    {
+        const uid = req.user.id;
+        const events = await eventModel.find({participants: uid});
+
+        if(!events)
+        {
+            return res.status(404).json({msg: 'No events found.'});
+        }
+        
+        res.status(200).json(events);
+
+    }
+    catch(err)
+    {
+        console.log('Error reading events: ', err);
+        res.status(500).json({msg: 'something went wrong'});
+    }
 });
 
 
