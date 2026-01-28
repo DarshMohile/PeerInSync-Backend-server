@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const eventModel = require('../dataModels/eventModel');
 const { jwtAuth } = require('../modules/jwt');
 
@@ -99,7 +100,7 @@ router.get('/myEvents', jwtAuth, async(req, res) => {
 
     try
     {
-        const uid = req.user.id;
+        const uid = new mongoose.Types.ObjectId(req.user.id);
         const events = await eventModel.find({participants: uid});
 
         if(!events)
