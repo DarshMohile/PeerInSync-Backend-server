@@ -20,7 +20,6 @@ const jwtAuth = (req, res, next) => {
     {
         return res.status(401).json({msg: 'Invalid Token'});
     }
-
 }
 
 

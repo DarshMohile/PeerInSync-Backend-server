@@ -84,6 +84,8 @@ router.post('/registerEvent/:eventID', jwtAuth, async(req, res) => {
             return res.status(400).json('Event not found, already registered, or event is full');
         }
 
+        console.log('registered by ' + uid);
+
         return res.status(200).json('Event registered successfully');
     }
     catch(err)
@@ -117,5 +119,38 @@ router.get('/myEvents', jwtAuth, async(req, res) => {
     }
 });
 
+
+router.put('/unregister/:eventID', jwtAuth, async (req, res) => {
+
+    try
+    {
+        const eventID = req.params.eventID;
+        const uid = req.user.id;
+
+        const result = await eventModel.updateOne(
+            {
+                _id: eventID,
+            },
+            {
+                $pull: { participants: uid }
+            }
+        );
+
+        if (result.modifiedCount === 0)
+            {
+                console.log(result);
+                return res.status(400).json('Event not found or already unregistered');
+            }
+    
+            console.log('unregistered by ' + uid);
+    
+            return res.status(200).json('Unregistered successfully');
+    }
+    catch(err)
+    {
+        console.log('Error unregistering: ', err.message);
+        res.status(500).json({msg: 'something went wrong'});
+    }
+});
 
 module.exports = router;
