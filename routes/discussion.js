@@ -50,11 +50,11 @@ router.get('/getPosts', jwtAuth, async(req, res) => {
 });
 
 
-// router.post('/registerEvent/:eventID', jwtAuth, async(req, res) => {
+// router.put('/editPost/:postID', jwtAuth, async(req, res) => {
 
 //     try
 //     {
-//         const eventID = req.params.eventID;
+//         const postID = req.params.postID;
 //         const uid = req.user.id;
 
 //         const result = await eventModel.updateOne(
