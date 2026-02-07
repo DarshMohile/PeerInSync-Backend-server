@@ -19,7 +19,6 @@ router.post('/create', jwtAuth, async (req, res) => {
             name: data.name,
             project_title: data.project_title,
             description: data.description,
-            creationDate: Date.now().toString(),
             date: data.date,
             time: data.time,
             event_type: data.event_type,
