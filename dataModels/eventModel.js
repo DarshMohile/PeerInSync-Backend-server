@@ -20,12 +20,19 @@ const eventDetailSchema = new mongoose.Schema({
         required: false
     },
 
+    
+    creationDate: {
+        
+        type: String,
+        default: Date.now.toString()
+    },
+    
     date: {
 
         type: String,
         required: true
     },
-
+    
     time: {
 
         type: String,
