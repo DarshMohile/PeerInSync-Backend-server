@@ -15,10 +15,13 @@ router.post('/create', jwtAuth, async (req, res) => {
             
         const data = req.body;
 
+        const today = new Date().toISOString().split('T')[0];
+
         const mappedData = {
             name: data.name,
             project_title: data.project_title,
             description: data.description,
+            creationDate: today,
             date: data.date,
             time: data.time,
             event_type: data.event_type,

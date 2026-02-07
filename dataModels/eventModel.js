@@ -24,7 +24,7 @@ const eventDetailSchema = new mongoose.Schema({
     creationDate: {
         
         type: Date,
-        default: Date.now
+        required: true
     },
     
     date: {
