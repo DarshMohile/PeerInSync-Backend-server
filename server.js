@@ -10,6 +10,7 @@ const loginRegisterRoutes = require('./routes/loginRegister.js');
 const helpDesk = require('./routes/helpDesk.js');
 const me = require('./routes/me.js');
 const events = require('./routes/events.js');
+const discussion = require('./routes/discussion.js');
 const port = process.env.PORT || 3000;
 
 require('dotenv').config();
@@ -65,6 +66,7 @@ app.use('/loginRegisterRoutes', loginRegisterRoutes);
 app.use('/helpDesk', helpDesk);
 app.use('/me', me);
 app.use('/events', events);
+app.use('/discussion', discussion);
 
 
 app.listen(port, () => {

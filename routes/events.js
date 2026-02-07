@@ -27,7 +27,7 @@ router.post('/create', jwtAuth, async (req, res) => {
 
         console.log('Received event Details: ', mappedData);
 
-        let event = new eventModel(mappedData);
+        const event = new eventModel(mappedData);
         await event.save();
         
         res.status(200).json({msg: 'Event Created successfully'});

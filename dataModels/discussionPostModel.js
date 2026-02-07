@@ -33,6 +33,18 @@ const discussionPostSchema = new mongoose.Schema({
         required: true,
         maxlength: 2000
     },
+
+    parentThread: {
+
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'discussionPostModel'
+    },
+
+    author: {
+
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'userModel'
+    },
 });
 
 const discussionPostModel = mongoose.model('discussionPostModel', discussionPostSchema);
