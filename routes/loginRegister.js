@@ -4,6 +4,8 @@ const express = require('express');
 const router = express.Router();
 const userModel = require('../dataModels/userModel');
 const {jwtAuth, generateToken} = require('../modules/jwt');
+const sendLoginMail = require('../modules/mailer');
+
 
 module.exports = router;
 
@@ -89,6 +91,14 @@ router.post('/login', async (req, res) => {
             };
 
             const token = generateToken(payload);
+
+            //send notification on email
+            const ip = req.ip;
+            const device = req.headers['user-agent'];
+            const fullName = user.fName + " " + user.lName;
+
+            sendLoginMail(user.email, fullName, ip, device)
+            .catch(err => console.log('Error sending login email: ', err));
 
             res.status(200).cookie('token', token, {
                 httpOnly: true,
