@@ -92,13 +92,14 @@ router.post('/login', async (req, res) => {
 
             const token = generateToken(payload);
 
+            console.log('JWT token created. sending email...');
+
             //send notification on email
             const ip = req.ip;
             const device = req.headers['user-agent'];
             const fullName = user.fName + " " + user.lName;
 
-            sendLoginMail(user.email, fullName, ip, device)
-            .catch(err => console.log('Error sending login email: ', err));
+            sendLoginMail(user.email, fullName, ip, device);
 
             res.status(200).cookie('token', token, {
                 httpOnly: true,
