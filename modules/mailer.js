@@ -34,6 +34,7 @@ const sendLoginMail = async (email, username, ip, device) => {
     }
 
     await transporter.sendMail(mailOptions);
+    console.log('Login Email sent');
 }
 
 module.exports = sendLoginMail;
