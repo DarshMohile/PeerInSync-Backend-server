@@ -69,8 +69,6 @@ router.post('/login', async (req, res) => {
             password: data.password,
         }
 
-        console.log('Received Credentials: ', mappedData); //for testing, debugging
-
         const user = await userModel.findOne({ email: mappedData.email }).select('+password');
 
         if (!user) 
