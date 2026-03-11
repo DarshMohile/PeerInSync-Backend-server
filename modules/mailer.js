@@ -1,23 +1,34 @@
 const nodeMailer = require('nodemailer');
 
 const transporter = nodeMailer.createTransport({
-    host: "smtp.gmail.com",
+    host: "smtp-relay.brevo.com",
     port: 587,
     secure: false,
-    connectionTimeout: 10000,
-    family: 4,
     auth: {
-        user: process.env.EMAIL_MAILER,
-        pass: process.env.PASS_MAILER
+        user: process.env.BREVO_SMTP_USER,
+        pass: process.env.BREVO_SMTP_PASS
     }
 });
 
-const sendLoginMail = async (email, username, ip, device) => {
+
+transporter.verify(function (error, success) {
+    if (error)
+    {
+      console.log(error);
+    }
+    else
+    {
+      console.log("Server is ready to send emails");
+    }
+  });
+
+
+const sendLoginMail = async (email, username, ip, device, loc, coords) => {
     try
     {
 
         const mailOptions = {
-            from: `"Peer In Sync Security" <${process.env.EMAIL_MAILER}>`,
+            from: `"Peer In Sync Security" <${process.env.EMAIL_FROM}>`,
             to: email,
             subject: 'New Login Detected',
     
@@ -27,9 +38,11 @@ const sendLoginMail = async (email, username, ip, device) => {
     
                 <p><strong>Login details:</strong></p>
                 <ul>
-                    <li>Time: ${new Date().toLocaleString()}</li>
-                    <li>IP Address: ${ip}</li>
-                    <li>Device: ${device}</li>
+                    <li><strong>Time:</strong> ${new Date().toLocaleString()}</li>
+                    <li><strong>IP Address:</strong> ${ip}</li>
+                    <li><strong>Device:</strong> ${device}</li>
+                    <li><strong>Location:</strong> ${loc}</li>
+                    <li><strong>Coordinates:</strong> ${coords}</li>
                 </ul>
     
                 <p>If this was you, you can ignore this email.</p>

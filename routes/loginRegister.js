@@ -1,7 +1,8 @@
 //Routes to handle login and signUp requests
-
 const express = require('express');
 const router = express.Router();
+const UAParser = require('ua-parser-js');
+const axios = require('axios');
 const userModel = require('../dataModels/userModel');
 const {jwtAuth, generateToken} = require('../modules/jwt');
 const sendLoginMail = require('../modules/mailer');
@@ -92,12 +93,24 @@ router.post('/login', async (req, res) => {
 
             console.log('JWT token created. sending email...');
 
+
             //send notification on email
-            const ip = req.ip;
-            const device = req.headers['user-agent'];
+            const parser = new UAParser(req.headers['user-agent']);     //parse user agent header
+            const userAgentDetails = parser.getResult();                //get the user agent details
+            const browser = userAgentDetails.browser.name;              //get the browser name
+            const os = userAgentDetails.os.name;                        //get the os name
+
+            const ip = req.headers['x-forwarded-for'] || req.ip;
+            const ipApiRes = await axios.get(`https://ipapi.co/${ip}/json/`);
+            const location = `${ipApiRes.data.city}, ${ipApiRes.data.country_name}`;
+            const coords = `Latitude: ${ipApiRes.data.latitude}, Logitude: ${ipApiRes.data.longitude}`;
+
+
+            const device = `${browser} on ${os}`;
             const fullName = user.fName + " " + user.lName;
 
-            sendLoginMail(user.email, fullName, ip, device);
+            sendLoginMail(user.email, fullName, ip, device, location, coords);
+
 
             res.status(200).cookie('token', token, {
                 httpOnly: true,
