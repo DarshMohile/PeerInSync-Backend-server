@@ -2,7 +2,7 @@ const nodeMailer = require('nodemailer');
 
 const transporter = nodeMailer.createTransport({
     host: "smtp-relay.brevo.com",
-    port: 587,
+    port: /*587*/2525,
     secure: false,
     connectionTimeout: 15000,
     greetingTimeout: 15000,
@@ -13,7 +13,8 @@ const transporter = nodeMailer.createTransport({
 });
 
 
-transporter.verify(function (error, success) {
+transporter.verify(function (error, success)
+{
     if (error)
     {
       console.log(error);
@@ -22,7 +23,7 @@ transporter.verify(function (error, success) {
     {
       console.log("Server is ready to send emails");
     }
-  });
+});
 
 
 const sendLoginMail = async (email, username, ip, device, loc, coords) => {

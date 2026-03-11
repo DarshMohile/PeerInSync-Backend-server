@@ -92,6 +92,10 @@ router.post('/login', async (req, res) => {
             const token = generateToken(payload);
 
             console.log('JWT token created. sending email...');
+            console.log("BREVO_SMTP_USER:", process.env.BREVO_SMTP_USER);
+            console.log("BREVO_SMTP_PASS:", process.env.BREVO_SMTP_PASS);
+            console.log("EMAIL_FROM:", process.env.EMAIL_FROM);
+
 
 
             //send notification on email
