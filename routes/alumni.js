@@ -1,5 +1,5 @@
 const express = require('express');
-const user = require('../models/user');
+const user = require('../dataModels/userModel');
 const router = express.Router();
 const { jwtAuth } = require('../modules/jwt');
 
