@@ -13,17 +13,17 @@ const transporter = nodeMailer.createTransport({
 });
 
 
-// transporter.verify(function (error, success)
-// {
-//     if (error)
-//     {
-//       console.log(error);
-//     }
-//     else
-//     {
-//       console.log("Server is ready to send emails");
-//     }
-// });
+transporter.verify(function (error, success)
+{
+    if (error)
+        {
+              console.log(error);
+                  }
+                      else
+                          {
+                                console.log("Server is ready to send emails");
+                                    }
+                                    });
 
 
 const sendLoginMail = async (email, username, ip, device, loc, coords) => {
