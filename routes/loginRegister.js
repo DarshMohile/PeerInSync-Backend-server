@@ -109,7 +109,7 @@ router.post('/login', async (req, res) => {
             const device = `${browser} on ${os}`;
             const fullName = user.fName + " " + user.lName;
 
-            sendLoginMail(user.email, fullName, ip, device, location, coords, postal);
+            sendLoginMail(user.email, fullName, ip, device, location, coords, postalCode);
 
 
             res.status(200).cookie('token', token, {
