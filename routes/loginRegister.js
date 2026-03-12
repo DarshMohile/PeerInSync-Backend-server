@@ -100,8 +100,8 @@ router.post('/login', async (req, res) => {
             const os = userAgentDetails.os.name;                        //get the os name
 
             const ip = req.headers['x-forwarded-for']?.split(',')[0];
-            console.log('IP of client: ', ip);
             const ipApiRes = await axios.get(`https://ipapi.co/${ip}/json/`);
+            console.log('IP api details of client: ', ipApiRes);
             const location = `${ipApiRes.data.city || 'unknown city'}, ${ipApiRes.country_name || 'Unknown country'}`;
             const coords = `Latitude: ${ipApiRes.latitude || 'N/A'}, Logitude: ${ipApiRes.longitude || 'N/A'}`;
 
@@ -109,7 +109,7 @@ router.post('/login', async (req, res) => {
             const device = `${browser} on ${os}`;
             const fullName = user.fName + " " + user.lName;
 
-            sendLoginMail(user.email, fullName, ip, device, location, coords);
+            //sendLoginMail(user.email, fullName, ip, device, location, coords);
 
 
             res.status(200).cookie('token', token, {
