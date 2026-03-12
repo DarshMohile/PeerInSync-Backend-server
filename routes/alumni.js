@@ -7,12 +7,12 @@ router.get('/getAlumni', jwtAuth, async (req, res) => {
 
     try
     {
-        const alumni = await user.find({role: 'alumni'});
+        const alumni = await user.find({ role: 'alumni' });
         res.status(200).json(alumni);
     }
     catch(err)
     {
-        console.log('Error getting alumni from db');
+        console.log('Error getting alumni from db', err);
         res.status(500).json({msg : 'something went wrong'});
     }
 });
