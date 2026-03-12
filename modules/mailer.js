@@ -41,10 +41,17 @@ const sendLoginMail = async (email, username, ip, device, loc, coords, postal) =
             subject: 'New Login Detected',
     
             html:`
-                <h2>Hello ${username}</h2>
-                <p>A new login to your account was detected.</p>
-    
+            <div style="background-color:#f8e7d1; padding: 10px; border: 2px solid black; border-radius: 10px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
+                <center style="font-size: 30px;">Peer In Sync Security</center>
+
+                <h2>Hello <span style="color:#0080FF;">${username}</span></h2>
+
+                <p style="background-color:#F73535; color:#FFFFFF; padding:8px;">
+                    A new login to your account was detected.
+                </p>
+
                 <p><strong>Login details:</strong></p>
+
                 <ul>
                     <li><strong>Time:</strong> ${loginTime}</li>
                     <li><strong>IP Address:</strong> ${ip}</li>
@@ -55,10 +62,11 @@ const sendLoginMail = async (email, username, ip, device, loc, coords, postal) =
                 </ul>
     
                 <p>If this was you, you can ignore this email.</p>
-                <p>If not, please reset your password immediately.</p>
+                <p>If not, please reset your password immediately. Reach out to us through our <a href="https://peer-in-sync.vercel.app/Help">Help Desk</a></p>
     
                 <br/>
-                <small>This is an automated security email.</small>
+                <p>*This is an automated security email.</p>
+            </div>
             `
         }
     
