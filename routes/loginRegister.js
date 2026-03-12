@@ -100,6 +100,7 @@ router.post('/login', async (req, res) => {
             const os = userAgentDetails.os.name;                        //get the os name
 
             const ip = req.headers['x-forwarded-for']?.split(',')[0];
+            console.log('IP of client: ', ip);
             const ipApiRes = await axios.get(`https://ipapi.co/${ip}/json/`);
             const location = `${ipApiRes.data.city || 'unknown city'}, ${ipApiRes.country_name || 'Unknown country'}`;
             const coords = `Latitude: ${ipApiRes.latitude || 'N/A'}, Logitude: ${ipApiRes.longitude || 'N/A'}`;
