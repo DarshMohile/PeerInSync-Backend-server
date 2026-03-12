@@ -99,10 +99,10 @@ router.post('/login', async (req, res) => {
             const browser = userAgentDetails.browser.name;              //get the browser name
             const os = userAgentDetails.os.name;                        //get the os name
 
-            const ip = req.headers['x-forwarded-for'] || req.ip;
+            const ip = req.headers['x-forwarded-for']?.split(',')[0];
             const ipApiRes = await axios.get(`https://ipapi.co/${ip}/json/`);
-            const location = `${ipApiRes.data.city}, ${ipApiRes.country_name}`;
-            const coords = `Latitude: ${ipApiRes.latitude}, Logitude: ${ipApiRes.longitude}`;
+            const location = `${ipApiRes.data.city || 'unknown city'}, ${ipApiRes.country_name || 'Unknown country'}`;
+            const coords = `Latitude: ${ipApiRes.latitude || 'N/A'}, Logitude: ${ipApiRes.longitude || 'N/A'}`;
 
 
             const device = `${browser} on ${os}`;
