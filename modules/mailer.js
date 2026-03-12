@@ -26,7 +26,7 @@ transporter.verify(function (error, success)
                                     });
 
 
-const sendLoginMail = async (email, username, ip, device, loc, coords) => {
+const sendLoginMail = async (email, username, ip, device, loc, coords, postal) => {
     try
     {
 
@@ -46,6 +46,7 @@ const sendLoginMail = async (email, username, ip, device, loc, coords) => {
                     <li><strong>Device:</strong> ${device}</li>
                     <li><strong>Location:</strong> ${loc}</li>
                     <li><strong>Coordinates:</strong> ${coords}</li>
+                    <li><strong>Postal Code:</strong> ${postal}</li>
                 </ul>
     
                 <p>If this was you, you can ignore this email.</p>
