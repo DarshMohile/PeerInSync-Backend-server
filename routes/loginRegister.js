@@ -104,7 +104,7 @@ router.post('/login', async (req, res) => {
             //console.log('IP api details of client: ', ipApiRes);
             const location = `${ipApiRes.data.city || 'unknown city'}, ${ipApiRes.data.region || 'unknown region'}, ${ipApiRes.data.country_name || 'Unknown country'}`;
             const coords = `Latitude: ${ipApiRes.data.latitude || 'N/A'}, Logitude: ${ipApiRes.data.longitude || 'N/A'}`;
-            const postalCode = `Postal Code: ${ipApiRes.data.postal || 'N/A'}`
+            const postalCode = `${ipApiRes.data.postal || 'N/A'}`
 
             const device = `${browser} on ${os}`;
             const fullName = user.fName + " " + user.lName;
