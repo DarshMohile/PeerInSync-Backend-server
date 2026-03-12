@@ -29,6 +29,11 @@ transporter.verify(function (error, success)
 const sendLoginMail = async (email, username, ip, device, loc, coords, postal) => {
     try
     {
+        const loginTime = new Date().toLocaleString("en-IN", {
+            timeZone: "Asia/Kolkata",
+            dateStyle: "medium",
+            timeStyle: "short"
+          }) + " IST";
 
         const mailOptions = {
             from: `"Peer In Sync Security" <${process.env.EMAIL_FROM}>`,
@@ -41,7 +46,7 @@ const sendLoginMail = async (email, username, ip, device, loc, coords, postal) =
     
                 <p><strong>Login details:</strong></p>
                 <ul>
-                    <li><strong>Time:</strong> ${new Date().toLocaleString()}</li>
+                    <li><strong>Time:</strong> ${loginTime}</li>
                     <li><strong>IP Address:</strong> ${ip}</li>
                     <li><strong>Device:</strong> ${device}</li>
                     <li><strong>Location:</strong> ${loc}</li>
