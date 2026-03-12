@@ -91,12 +91,7 @@ router.post('/login', async (req, res) => {
 
             const token = generateToken(payload);
 
-            console.log('JWT token created. sending email...');
-            console.log("BREVO_SMTP_USER:", process.env.BREVO_SMTP_USER);
-            console.log("BREVO_SMTP_PASS:", process.env.BREVO_SMTP_PASS);
-            console.log("EMAIL_FROM:", process.env.EMAIL_FROM);
-
-
+            console.log('sending email...');
 
             //send notification on email
             const parser = new UAParser(req.headers['user-agent']);     //parse user agent header
@@ -106,8 +101,8 @@ router.post('/login', async (req, res) => {
 
             const ip = req.headers['x-forwarded-for'] || req.ip;
             const ipApiRes = await axios.get(`https://ipapi.co/${ip}/json/`);
-            const location = `${ipApiRes.data.city}, ${ipApiRes.data.country_name}`;
-            const coords = `Latitude: ${ipApiRes.data.latitude}, Logitude: ${ipApiRes.data.longitude}`;
+            const location = `${ipApiRes.data.city}, ${ipApiRes.country_name}`;
+            const coords = `Latitude: ${ipApiRes.latitude}, Logitude: ${ipApiRes.longitude}`;
 
 
             const device = `${browser} on ${os}`;
