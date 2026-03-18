@@ -96,7 +96,7 @@ router.post('/login', async (req, res) => {
             const uaHeader = req.headers['user-agent'];
             const ip = req.headers['x-forwarded-for']?.split(',')[0];
 
-            const ipDets = getIPDetails(uaHeader, ip);
+            const ipDets = await getIPDetails(uaHeader, ip);
             const fullName = user.fName + " " + user.lName;
 
             console.log('ipDets obj: ', ipDets);
