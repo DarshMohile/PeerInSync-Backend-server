@@ -15,13 +15,22 @@ const fetchIPDetails = async (uaHeader, ip) => {
     const browser = userAgentDetails.browser.name;              //get the browser name
     const os = userAgentDetails.os.name;                        //get the os name
     
-    const ipApiRes = await axios.get(`https://ipapi.co/${ip}/json/`);
-    //console.log('IP api details of client: ', ipApiRes);
+    try
+    {
+        const ipApiRes = await axios.get(`https://ipapi.co/${ip}/json/`);
+        //console.log('IP api details of client: ', ipApiRes);
+    }
+    catch(err)
+    {
+        console.log('IP API Failed: ', err);
+    }
 
     ipDetails.location = `${ipApiRes.data.city || 'unknown city'}, ${ipApiRes.data.region || 'unknown region'}, ${ipApiRes.data.country_name || 'Unknown country'}`;
     ipDetails.coords = `Latitude: ${ipApiRes.data.latitude || 'N/A'}, Logitude: ${ipApiRes.data.longitude || 'N/A'}`;
     ipDetails.postalCode = `${ipApiRes.data.postal || 'N/A'}`
     ipDetails.device = `${browser} on ${os}`;
+
+    console.log('Gathered ip details: ', ipDetails);
 
     return ipDetails;
 };

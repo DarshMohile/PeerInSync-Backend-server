@@ -99,6 +99,8 @@ router.post('/login', async (req, res) => {
             const ipDets = getIPDetails(uaHeader, ip);
             const fullName = user.fName + " " + user.lName;
 
+            console.log('ipDets obj: ', ipDets);
+
             sendLoginMail(user.email, fullName, ip, ipDets.device, ipDets.location, ipDets.coords, ipDets.postalCode);
 
 
