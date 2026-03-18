@@ -2,13 +2,13 @@ const mongoose = require('mongoose');
 
 const helpTicketSchema = new mongoose.Schema({
 
-    fullName: {
+    email: {
 
         type: String,
         required: true
     },
 
-    email: {
+    title: {
 
         type: String,
         required: true

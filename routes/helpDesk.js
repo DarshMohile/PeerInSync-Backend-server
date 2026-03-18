@@ -10,8 +10,8 @@ router.post('/help', async (req, res) => {
         const data = req.body;
 
         const mappedData = {
-            fullName: data.fullName,
             email: data.email,
+            title: data.title,
             message: data.message,
             time: new Date().toString()
         }

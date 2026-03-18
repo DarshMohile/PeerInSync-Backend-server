@@ -1,11 +1,10 @@
 //Routes to handle login and signUp requests
 const express = require('express');
 const router = express.Router();
-const UAParser = require('ua-parser-js');
-const axios = require('axios');
 const userModel = require('../dataModels/userModel');
 const {jwtAuth, generateToken} = require('../modules/jwt');
 const sendLoginMail = require('../modules/mailer');
+const getIPDetails = require('../modules/ipParser');
 
 
 module.exports = router;
@@ -94,22 +93,13 @@ router.post('/login', async (req, res) => {
             console.log('sending email...');
 
             //send notification on email
-            const parser = new UAParser(req.headers['user-agent']);     //parse user agent header
-            const userAgentDetails = parser.getResult();                //get the user agent details
-            const browser = userAgentDetails.browser.name;              //get the browser name
-            const os = userAgentDetails.os.name;                        //get the os name
-
+            const uaHeader = req.headers['user-agent'];
             const ip = req.headers['x-forwarded-for']?.split(',')[0];
-            const ipApiRes = await axios.get(`https://ipapi.co/${ip}/json/`);
-            //console.log('IP api details of client: ', ipApiRes);
-            const location = `${ipApiRes.data.city || 'unknown city'}, ${ipApiRes.data.region || 'unknown region'}, ${ipApiRes.data.country_name || 'Unknown country'}`;
-            const coords = `Latitude: ${ipApiRes.data.latitude || 'N/A'}, Logitude: ${ipApiRes.data.longitude || 'N/A'}`;
-            const postalCode = `${ipApiRes.data.postal || 'N/A'}`
 
-            const device = `${browser} on ${os}`;
+            const ipDets = getIPDetails(uaHeader, ip);
             const fullName = user.fName + " " + user.lName;
 
-            sendLoginMail(user.email, fullName, ip, device, location, coords, postalCode);
+            sendLoginMail(user.email, fullName, ip, ipDets.device, ipDets.location, ipDets.coords, ipDets.postalCode);
 
 
             res.status(200).cookie('token', token, {

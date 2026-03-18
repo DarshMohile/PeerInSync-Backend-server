@@ -6,6 +6,9 @@ const transporter = nodeMailer.createTransport({
     secure: false,
     connectionTimeout: 15000,
     greetingTimeout: 15000,
+    pool: true,      
+    maxConnections: 5,       
+    maxMessages: 100,
     auth: {
         user: process.env.BREVO_SMTP_USER,
         pass: process.env.BREVO_SMTP_PASS
@@ -16,14 +19,14 @@ const transporter = nodeMailer.createTransport({
 transporter.verify(function (error, success)
 {
     if (error)
-        {
-              console.log(error);
-                  }
-                      else
-                          {
-                                console.log("Server is ready to send emails");
-                                    }
-                                    });
+    {
+        console.log(error);
+    }
+    else
+    {
+        console.log("Server is ready to send emails");
+    }
+});
 
 
 const sendLoginMail = async (email, username, ip, device, loc, coords, postal) => {
@@ -70,7 +73,7 @@ const sendLoginMail = async (email, username, ip, device, loc, coords, postal) =
             `
         }
     
-        await transporter.sendMail(mailOptions);
+        await transporter.sendMail(mailOptions, { timeout: 10000 });
         console.log('Login Email sent');
     }
     catch(err)
