@@ -99,12 +99,21 @@ router.post('/login', async (req, res) => {
             const uaHeader = req.headers['user-agent'];
             const ip = req.headers['x-forwarded-for']?.split(',')[0];
 
-            const ipDets = await getIPDetails(uaHeader, ip);
+            const ipDets = await getIPDetails(uaHeader, ip) || {};
             const fullName = user.fName + " " + user.lName;
 
             console.log('ipDets obj: ', ipDets);
 
-            sendLoginMail(user.email, fullName, ip, ipDets.device, ipDets.location, ipDets.coords, ipDets.postalCode);
+
+            sendLoginMail(
+                user.email,
+                fullName,
+                ip,
+                ipDets.device || 'Unknown device',
+                ipDets.location || 'Unknown location',
+                ipDets.coords || 'N/A',
+                ipDets.postalCode || 'N/A'
+            );
 
 
             res.status(200).cookie('token', token, {
