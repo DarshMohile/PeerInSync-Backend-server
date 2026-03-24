@@ -18,7 +18,7 @@ const fetchIPDetails = async (uaHeader, ip) => {
     try
     {
         const ipApiRes = await axios.get(`https://ipapi.co/${ip}/json/`);
-        //console.log('IP api details of client: ', ipApiRes);
+        console.log('IP api details of client: ', ipApiRes);
 
         ipDetails.location = `${ipApiRes.data.city || 'unknown city'}, ${ipApiRes.data.region || 'unknown region'}, ${ipApiRes.data.country_name || 'Unknown country'}`;
         ipDetails.coords = `Latitude: ${ipApiRes.data.latitude || 'N/A'}, Logitude: ${ipApiRes.data.longitude || 'N/A'}`;

@@ -27,11 +27,14 @@ router.post('/signup', async (req, res) => {
             branch: data.branch,
             current_year_of_study: data.current_year_of_study,
             gender: data.gender,
-            role: data.role
+            role: data.role,
+            areas_of_expertise: data.areas_of_expertise,
+            company_organization: data.company_organization,
+            designation: data.designation
         }
 
         console.log('Received Data: ', mappedData);
-
+        
         let newUser = new userModel(mappedData);
         await newUser.save();
 

@@ -78,6 +78,30 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: ['student', 'alumni']
+    },
+
+    areas_of_expertise:{
+
+        type: Array,
+        required: function () {
+            return this.role === 'alumni';
+        }
+    },
+
+    company_organization:{
+
+        type: String,
+        required: function () {
+            return this.role === 'alumni';
+        }
+    },
+
+    designation:{
+
+        type: String,
+        required: function () {
+            return this.role === 'alumni';
+        }
     }
     
 }, {collection: "usermodels"});
