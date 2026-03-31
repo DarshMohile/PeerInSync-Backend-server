@@ -23,6 +23,7 @@ app.use(cors({origin: true, credentials: true}));
 app.use(express.static(path.join(__dirname, 'rootPage')));
 app.use(cookieParser());
 app.set('trust proxy', true);
+app.use(express.urlencoded({ extended: true }))
 
 //Log the details of every request that comes to backend
 const logInfo = (req, res, next) => {
