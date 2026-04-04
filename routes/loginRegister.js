@@ -64,11 +64,13 @@ router.post('/signup', async (req, res) => {
     catch(err)
     {
         console.log('Error receiving data: ', err.message);
-        res.status(500).json({msg: 'something went wrong', error: err.message});
+        
         if(err.code === 11000)
         {
-            return(res.status(400).json({msg:'Account with this email already exists.', error:err.message}));
+            return (res.status(400).json({msg:'Account with this email already exists.', error:err.message}));
         }
+        
+        res.status(500).json({msg: 'something went wrong', error: err.message});
     }
 });
 
