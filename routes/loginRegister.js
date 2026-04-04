@@ -33,6 +33,14 @@ router.post('/signup', async (req, res) => {
             designation: data.designation
         }
 
+        if (mappedData.role === 'alumni') {
+            if (!mappedData.company_organization || !mappedData.designation || !mappedData.areas_of_expertise) {
+                return res.status(400).json({
+                    msg: 'Alumni must provide company, designation and expertise'
+                });
+            }
+        }
+
         console.log('Received Data: ', mappedData);
         
         let newUser = new userModel(mappedData);
@@ -57,6 +65,10 @@ router.post('/signup', async (req, res) => {
     {
         console.log('Error receiving data: ', err.message);
         res.status(500).json({msg: 'something went wrong', error: err.message});
+        if(err.code === 11000)
+        {
+            return(res.status(400).json({msg:'Account with this email already exists.', error:err.message}));
+        }
     }
 });
 
