@@ -28,7 +28,7 @@ router.post('/signup', async (req, res) => {
             current_year_of_study: data.current_year_of_study,
             gender: data.gender,
             role: data.role,
-            areas_of_expertise: data.areas_of_expertise,
+            areas_of_expertise_interest: data.areas_of_expertise_interest,
             company_organization: data.company_organization,
             designation: data.designation
         }

@@ -80,7 +80,7 @@ const userSchema = new mongoose.Schema({
         enum: ['student', 'alumni']
     },
 
-    areas_of_expertise:{
+    areas_of_expertise_interest:{
 
         type: Array,
         required: function () {

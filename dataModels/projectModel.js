@@ -15,6 +15,11 @@ const fileSchema = new mongoose.Schema({
     content: {
         type: String,
         default: ""
+    },
+
+    updatedAt: {
+        type:String,
+        required: true
     }
 }, {_id : true});
 
