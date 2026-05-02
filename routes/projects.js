@@ -15,10 +15,10 @@ router.post('/create', jwtAuth, async (req, res) => {
         members: [owner],
         files: [
             {
-                fileName: "index.js",
-                language: "javascript",
+                fileName: data.fileName || "index.js",
+                language: data.language || "javascript",
                 content: "// Start Coding",
-                updatedAt: new Date().toString()
+                updatedAt: new Date()
             }
         ]
     });
