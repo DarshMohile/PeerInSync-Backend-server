@@ -62,6 +62,32 @@ router.put('/update/:projId/file/:fileId', jwtAuth, async (req, res) => {
     }
 });
 
+
+router.post('/addFile/:projId', jwtAuth, async (req, res) => {
+    try {
+        const { fileName, language } = req.body;
+
+        const newFile = {
+            fileName,
+            language,
+            content: "",
+            updatedAt: new Date()
+        };
+
+        const project = await Project.findByIdAndUpdate(
+            req.params.projId,
+            { $push: { files: newFile } },
+            { new: true }
+        );
+
+        res.json(project);
+    } catch (err) {
+        res.status(500).json({ error: "Failed to add file" });
+    }
+});
+
+
+
 router.delete('/delete/:id', jwtAuth, async (req, res) => { });
 
 module.exports = router;
