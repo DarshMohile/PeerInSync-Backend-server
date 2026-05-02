@@ -87,6 +87,20 @@ router.post('/addFile/:projId', jwtAuth, async (req, res) => {
 });
 
 
+router.delete('/deleteFile/:projId/:fileId', jwtAuth, async (req, res) => {
+    try {
+        const project = await Project.findByIdAndUpdate(
+            req.params.projId,
+            { $pull: { files: { _id: req.params.fileId } } },
+            { new: true }
+        );
+
+        res.json(project);
+    } catch (err) {
+        res.status(500).json({ error: "Delete failed" });
+    }
+});
+
 
 router.delete('/delete/:id', jwtAuth, async (req, res) => { });
 

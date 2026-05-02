@@ -7,6 +7,10 @@ const fileSchema = new mongoose.Schema({
         required: true
     },
 
+    folder: {
+        type: String
+    },
+
     language: {
         type: String,
         required: true
