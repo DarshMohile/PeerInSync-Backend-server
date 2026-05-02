@@ -63,3 +63,5 @@ router.put('/update/:projId/file/:fileId', jwtAuth, async (req, res) => {
 });
 
 router.delete('/delete/:id', jwtAuth, async (req, res) => { });
+
+module.exports = router;
