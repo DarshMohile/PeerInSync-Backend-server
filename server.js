@@ -12,6 +12,8 @@ const me = require('./routes/me.js');
 const events = require('./routes/events.js');
 const discussion = require('./routes/discussion.js');
 const alumni = require('./routes/alumni.js');
+const projects = require('./routes/projects.js');
+
 const port = process.env.PORT || 3000;
 
 require('dotenv').config();
@@ -70,6 +72,7 @@ app.use('/me', me);
 app.use('/events', events);
 app.use('/discussion', discussion);
 app.use('/alumni', alumni);
+app.use('/projects', projects);
 
 
 app.listen(port, () => {

@@ -6,22 +6,19 @@ const userModel = require('../dataModels/userModel');
 
 router.get('/me', jwtAuth, async (req, res) => {
 
-    try
-    {
+    try {
         const uid = req.user.id;
         const user = await userModel.findOne({ _id: uid })
-    
-        if (!user) 
-        {
-            return res.status(404).json({msg: 'User Data Not Found'});
+
+        if (!user) {
+            return res.status(404).json({ msg: 'User Data Not Found' });
         }
-    
+
         res.status(200).json(user);
     }
-    catch(err)
-    {
+    catch (err) {
         console.log('Error sending userInfo: ', err);
-        res.status(500).json({msg: 'something went wrong'});
+        res.status(500).json({ msg: 'something went wrong' });
     }
 
 });
@@ -29,8 +26,7 @@ router.get('/me', jwtAuth, async (req, res) => {
 
 router.put('/update', jwtAuth, async (req, res) => {
 
-    try
-    {
+    try {
         const uid = req.user.id;
         const data = req.body;
 
@@ -44,28 +40,30 @@ router.put('/update', jwtAuth, async (req, res) => {
             branch: data.branch,
             current_year_of_study: data.current_year_of_study,
             gender: data.gender,
-            role: data.role
+            role: data.role,
+            areas_of_expertise_interest: data.areas_of_expertise_interest,
+            company_organization: data.company_organization,
+            designation: data.designation,
         }
 
-        const response = await userModel.findByIdAndUpdate(uid, { $set: mappedData}, {
+        const response = await userModel.findByIdAndUpdate(uid, { $set: mappedData }, {
 
             new: true,  //return the updated data
             runValidators: false     //Check all validations (like required field, not NULL etc...)
         }).select('-password');
 
-        if(!response)   //If the specified record is not found
+        if (!response)   //If the specified record is not found
         {
             console.log('::Failed to update data. Specified id not found.\n');
-            return res.status(404).json({err: 'User not found.'});
+            return res.status(404).json({ err: 'User not found.' });
         }
 
         console.log('::Data updated successfully');
         res.status(200).json(response);
     }
-    catch(err)
-    {
+    catch (err) {
         console.log('::Error accessing the data from database: ' + err + '\n');
-        res.status(500).json({error : 'Internal Server Error.'});
+        res.status(500).json({ error: 'Internal Server Error.' });
     }
 
 });
