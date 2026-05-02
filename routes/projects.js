@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const project = require('../dataModels/projectModel');
+const Project = require('../dataModels/projectModel');
 const { jwtAuth } = require('../modules/jwt');
 
 
