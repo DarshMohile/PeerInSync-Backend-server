@@ -25,7 +25,6 @@ router.post('/create', jwtAuth, async (req, res) => {
 
     await newProject.save();
     res.status(201).json(newProject);
-
 });
 
 router.get('/myProjects', jwtAuth, async (req, res) => { });
