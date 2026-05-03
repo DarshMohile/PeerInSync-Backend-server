@@ -23,7 +23,8 @@ router.post('/create', jwtAuth, async (req, res) => {
             description: data.description,
             creationDate: today,
             date: data.date,
-            time: data.time,
+            start_time: data.start_time,
+            end_time: data.end_time,
             event_type: data.event_type,
             loc_link: data.loc_link
         }
