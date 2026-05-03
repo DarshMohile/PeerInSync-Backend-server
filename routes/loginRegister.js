@@ -34,7 +34,7 @@ router.post('/signup', async (req, res) => {
         }
 
         if (mappedData.role === 'alumni') {
-            if (!mappedData.company_organization || !mappedData.designation || !mappedData.areas_of_expertise) {
+            if (!mappedData.company_organization || !mappedData.designation || !mappedData.areas_of_expertise_interest) {
                 return res.status(400).json({
                     msg: 'Alumni must provide company, designation and expertise'
                 });
