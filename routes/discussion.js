@@ -11,8 +11,8 @@ router.post('/create', jwtAuth, async (req, res) => {
         const data = req.body;
 
         const mappedData = {
-            author: req.user.name,
-            postRole: req.user.role,
+            author: data.author,//req.user.name,
+            postRole: data.role, //req.user.role,
             time: new Date().toString(),
             editedFlag: data.editedFlag,
             postTitle: data.postTitle,
