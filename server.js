@@ -5,7 +5,11 @@ const app = express();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
+const http = require("http");
+const { Server } = require("socket.io");
 
+
+const socketHandler = require('./modules/socket.js');
 const loginRegisterRoutes = require('./routes/loginRegister.js');
 const helpDesk = require('./routes/helpDesk.js');
 const me = require('./routes/me.js');
@@ -75,7 +79,19 @@ app.use('/alumni', alumni);
 app.use('/projects', projects);
 
 
-app.listen(port, () => {
-    
+const server = http.createServer(app);
+
+const io = new Server(server, {
+    cors: {
+        origin: true,
+        credentials: true
+    }
+});
+
+//  connect your socket logic
+socketHandler(io);
+
+//  start server
+server.listen(port, () => {
     console.log("Server is online on port: " + port);
 });
