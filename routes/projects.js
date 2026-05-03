@@ -89,14 +89,14 @@ router.post('/addFile/:projId', jwtAuth, async (req, res) => {
 router.put('/rename/:projId/file/:fileId', jwtAuth, async (req, res) => {
 
     const { projId, fileId } = req.params;
-    const { fileName } = req.body;
+    const { fileName, language } = req.body;
 
     const updatedProject = await project.findOneAndUpdate(
         { _id: projId, "files._id": fileId },
         {
             $set: {
                 "files.$.fileName": fileName,
-                "files.$.language": language
+                "files.$.language": language   //  REQUIRED
             }
         },
         { new: true }
