@@ -8,11 +8,11 @@ const discussionPostSchema = new mongoose.Schema({
         required: true
     },
 
-    // authorID: {
+    authorID: {
 
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'userModel'
-    // },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'userModel'
+    },
     
     postRole: {
         type: String,
