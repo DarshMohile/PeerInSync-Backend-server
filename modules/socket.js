@@ -11,6 +11,10 @@ module.exports = (io) => {
             socket.to(data.projectId).emit("code-change", data);
         });
 
+        socket.on("cursor-move", (data) => {
+            socket.to(data.projectId).emit("cursor-move", data);
+        });
+
     });
 
 };

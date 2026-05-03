@@ -14,10 +14,21 @@ const discussionPostSchema = new mongoose.Schema({
         required: true
     },
 
+    postCategory: {
+        type: String,
+        required: true
+    },
+
+    postRole: {
+        type: String,
+        required: true
+    },
+
     editedFlag: {
 
         type: Boolean,
-        required: true
+        required: true,
+        default: false
     },
 
     postTitle: {
