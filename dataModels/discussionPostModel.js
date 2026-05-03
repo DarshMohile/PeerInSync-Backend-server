@@ -2,11 +2,17 @@ const mongoose = require('mongoose');
 
 const discussionPostSchema = new mongoose.Schema({
 
-    author: {
+    authorName: {
 
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'userModel'
+        type: String,
+        required: true
     },
+
+    // authorID: {
+
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'userModel'
+    // },
     
     postRole: {
         type: String,
