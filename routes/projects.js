@@ -87,22 +87,30 @@ router.post('/addFile/:projId', jwtAuth, async (req, res) => {
 
 
 router.put('/rename/:projId/file/:fileId', jwtAuth, async (req, res) => {
+    try {
+        const { projId, fileId } = req.params;
+        const { fileName, language } = req.body;
 
-    const { projId, fileId } = req.params;
-    const { fileName, language } = req.body;
+        const updatedProject = await project.findOneAndUpdate(
+            { _id: projId, "files._id": fileId },
+            {
+                $set: {
+                    "files.$.fileName": fileName,
+                    "files.$.language": language
+                }
+            },
+            { new: true }
+        );
 
-    const updatedProject = await project.findOneAndUpdate(
-        { _id: projId, "files._id": fileId },
-        {
-            $set: {
-                "files.$.fileName": fileName,
-                "files.$.language": language   //  REQUIRED
-            }
-        },
-        { new: true }
-    );
+        if (!updatedProject) {
+            return res.status(404).json({ message: "Project or file not found" });
+        }
 
-    res.json(updatedProject);
+        res.json(updatedProject);
+    } catch (err) {
+        console.error("Rename failed:", err);
+        res.status(500).json({ message: err.message });
+    }
 });
 
 
