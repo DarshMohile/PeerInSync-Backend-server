@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Project = require('../dataModels/projectModel');
+const projectModel = require('../dataModels/projectModel');
 const { jwtAuth } = require('../modules/jwt');
 
 
@@ -9,7 +9,7 @@ router.post('/create', jwtAuth, async (req, res) => {
     const data = req.body;
     const owner = req.user.id;
 
-    const newProject = new Project({
+    const newProject = new projectModel({
         name: data.name || "untitled_project",
         owner,
         members: [owner],
@@ -32,7 +32,7 @@ router.get('/myProjects', jwtAuth, async (req, res) => { });
 router.get('/getProject/:id', jwtAuth, async (req, res) => {
 
     try {
-        const project = await Project.findById(req.params.id);
+        const project = await projectModel.findById(req.params.id);
         res.json(project);
     } catch (err) {
         res.status(500).json({ error: "Failed to fetch project" });
@@ -44,7 +44,7 @@ router.put('/update/:projId/file/:fileId', jwtAuth, async (req, res) => {
     try {
         const { content } = req.body;
 
-        const project = await Project.findOneAndUpdate(
+        const project = await projectModel.findOneAndUpdate(
             { _id: req.params.projId, "files._id": req.params.fileId },
             {
                 $set: {
@@ -73,7 +73,7 @@ router.post('/addFile/:projId', jwtAuth, async (req, res) => {
             updatedAt: new Date()
         };
 
-        const project = await Project.findByIdAndUpdate(
+        const project = await projectModel.findByIdAndUpdate(
             req.params.projId,
             { $push: { files: newFile } },
             { new: true }
@@ -91,7 +91,7 @@ router.put('/rename/:projId/file/:fileId', jwtAuth, async (req, res) => {
         const { projId, fileId } = req.params;
         const { fileName, language } = req.body;
 
-        const updatedProject = await project.findOneAndUpdate(
+        const updatedProject = await projectModel.findOneAndUpdate(
             { _id: projId, "files._id": fileId },
             {
                 $set: {
@@ -116,7 +116,7 @@ router.put('/rename/:projId/file/:fileId', jwtAuth, async (req, res) => {
 
 router.delete('/deleteFile/:projId/:fileId', jwtAuth, async (req, res) => {
     try {
-        const project = await Project.findByIdAndUpdate(
+        const project = await projectModel.findByIdAndUpdate(
             req.params.projId,
             { $pull: { files: { _id: req.params.fileId } } },
             { new: true }
