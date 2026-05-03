@@ -11,13 +11,14 @@ router.post('/create', jwtAuth, async (req, res) => {
         const data = req.body;
 
         const mappedData = {
-            name: data.name,
-            time: data.time,
+            author: req.user.name,
+            postRole: req.user.role,
+            time: new Date().toString(),
             editedFlag: data.editedFlag,
-            postTitle: data.date,
+            postTitle: data.postTitle,
             postBody: data.postBody,
             parentThread: data.parentThread,
-            author: data.author
+            postCategory: data.postCategory,
         }
 
         console.log('Received discussionPost Details: ', mappedData);

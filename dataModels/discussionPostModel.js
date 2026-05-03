@@ -2,28 +2,23 @@ const mongoose = require('mongoose');
 
 const discussionPostSchema = new mongoose.Schema({
 
-    name: {
+    author: {
 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'userModel'
+    },
+    
+    postRole: {
         type: String,
         required: true
     },
-
+    
     time: {
 
         type: String,
         required: true
     },
-
-    postCategory: {
-        type: String,
-        required: true
-    },
-
-    postRole: {
-        type: String,
-        required: true
-    },
-
+    
     editedFlag: {
 
         type: Boolean,
@@ -50,12 +45,11 @@ const discussionPostSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'discussionPostModel'
     },
-
-    author: {
-
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'userModel'
-    },
+    
+    postCategory: {
+        type: String,
+        required: true
+    }
 });
 
 const discussionPostModel = mongoose.model('discussionPostModel', discussionPostSchema);
