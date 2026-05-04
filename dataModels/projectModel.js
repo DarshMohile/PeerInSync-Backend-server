@@ -4,7 +4,6 @@ const fileSchema = new mongoose.Schema({
 
     fileName: {
         type: String,
-        required: true
     },
 
     folder: {
@@ -13,7 +12,6 @@ const fileSchema = new mongoose.Schema({
 
     language: {
         type: String,
-        required: true
     },
 
     content: {

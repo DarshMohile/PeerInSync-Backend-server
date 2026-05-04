@@ -23,6 +23,8 @@ router.post('/create', jwtAuth, async (req, res) => {
         ]
     });
 
+    console.log("New project is: " + newProject);
+
     await newProject.save();
     res.status(201).json(newProject);
 });
