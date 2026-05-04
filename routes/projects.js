@@ -27,7 +27,15 @@ router.post('/create', jwtAuth, async (req, res) => {
     res.status(201).json(newProject);
 });
 
-router.get('/myProjects', jwtAuth, async (req, res) => { });
+router.get('/myProjects', jwtAuth, async (req, res) => {
+
+    try {
+        const projects = await projectModel.find({ owner: req.user.id});
+        res.json(projects);
+    } catch (err) {
+        res.status(500).json({ error: "Failed to fetch projects" });
+    }
+});
 
 router.get('/getProject/:id', jwtAuth, async (req, res) => {
 
