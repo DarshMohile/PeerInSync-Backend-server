@@ -8,6 +8,9 @@ router.post('/create', jwtAuth, async (req, res) => {
 
     const data = req.body;
     const uid = req.user.id;
+    const member = data.members;
+
+    console.log(req.body);
 
     const newProject = new projectModel({
         name: data.name || "untitled_project",
