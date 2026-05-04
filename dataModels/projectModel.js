@@ -30,7 +30,7 @@ const fileSchema = new mongoose.Schema({
 
 const projectSchema = new mongoose.Schema({
 
-    name: {
+    project_title: {
         type: String,
         required: true
     },

@@ -7,17 +7,17 @@ const { jwtAuth } = require('../modules/jwt');
 router.post('/create', jwtAuth, async (req, res) => {
 
     const data = req.body;
-    const owner = req.user.id;
+    const uid = req.user.id;
 
     const newProject = new projectModel({
         name: data.name || "untitled_project",
-        owner,
-        members: [owner],
+        owner: uid,
+        members: [data.members],
         files: [
             {
-                fileName: data.fileName || "index.js",
-                language: data.language || "javascript",
-                content: "// Start Coding",
+                fileName: data.fileName || "",
+                language: data.language || "",
+                content: "",
                 updatedAt: new Date()
             }
         ]
