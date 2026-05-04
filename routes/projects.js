@@ -34,7 +34,7 @@ router.post('/create', jwtAuth, async (req, res) => {
 router.get('/myProjects', jwtAuth, async (req, res) => {
 
     try {
-        const projects = await projectModel.find({ owner: req.user.id});
+        const projects = await projectModel.find({ owner: req.user.id });
         console.log(projects);
         res.json(projects);
     } catch (err) {
@@ -127,6 +127,33 @@ router.put('/rename/:projId/file/:fileId', jwtAuth, async (req, res) => {
 });
 
 
+router.put('/update/:projId', jwtAuth, async (req, res) => {
+    try {
+        const { project_title, collaborators } = req.body;
+
+        const project = await projectModel.findByIdAndUpdate(
+            req.params.projId,
+            {
+                $set: {
+                    project_title,
+                    collaborators
+                }
+            },
+            { new: true }
+        );
+
+        if (!project) {
+            return res.status(404).json({ error: "Project not found" });
+        }
+
+        res.json(project);
+        
+    } catch (err) {
+        res.status(500).json({ error: "Update failed" });
+    }
+});
+
+
 router.delete('/deleteFile/:projId/:fileId', jwtAuth, async (req, res) => {
     try {
         const project = await projectModel.findByIdAndUpdate(
@@ -142,14 +169,14 @@ router.delete('/deleteFile/:projId/:fileId', jwtAuth, async (req, res) => {
 });
 
 
-router.delete('/delete/:id', jwtAuth, async (req, res) => { 
+router.delete('/delete/:id', jwtAuth, async (req, res) => {
 
     try {
         const project = await projectModel.findByIdAndDelete(req.params.id);
-        res.status(200).json({success: "Project deleted successfully"});
+        res.status(200).json({ success: "Project deleted successfully" });
     } catch (err) {
         res.status(500).json({ error: "Delete failed" });
     }
- });
+});
 
 module.exports = router;
