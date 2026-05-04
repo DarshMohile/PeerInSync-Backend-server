@@ -40,8 +40,14 @@ const projectSchema = new mongoose.Schema({
     },
 
     collaborators: [{
-        type: mongoose.Schema.ObjectId,
-        ref: 'usermodel'
+        _id: false,
+        id: { 
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'usermodel' 
+        },
+        name: { 
+            type: String 
+        }
     }],
 
     files: [fileSchema]
