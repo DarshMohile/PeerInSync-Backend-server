@@ -14,7 +14,7 @@ router.post('/create', jwtAuth, async (req, res) => {
     const newProject = new projectModel({
         project_title: data.name || "untitled_project",
         owner: uid,
-        collaborators: [data.collaborators.id],
+        collaborators: [data.collaborators],
         files: [
             {
                 fileName: data.fileName || "first_file.js",
