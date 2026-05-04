@@ -12,9 +12,11 @@ router.post('/create', jwtAuth, async (req, res) => {
     console.log(req.body);
 
     const newProject = new projectModel({
-        project_title: data.name || "untitled_project",
+        project_title: data.project_title || "untitled_project",
         owner: uid,
-        collaborators: [data.collaborators],
+        collaborators: Array.isArray(data.collaborators)
+            ? data.collaborators
+            : [],
         files: [
             {
                 fileName: data.fileName || "first_file.js",
@@ -147,7 +149,7 @@ router.put('/update/:projId', jwtAuth, async (req, res) => {
         }
 
         res.json(project);
-        
+
     } catch (err) {
         res.status(500).json({ error: "Update failed" });
     }
