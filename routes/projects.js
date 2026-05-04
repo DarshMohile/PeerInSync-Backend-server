@@ -31,6 +31,7 @@ router.get('/myProjects', jwtAuth, async (req, res) => {
 
     try {
         const projects = await projectModel.find({ owner: req.user.id});
+        console.log(projects);
         res.json(projects);
     } catch (err) {
         res.status(500).json({ error: "Failed to fetch projects" });
