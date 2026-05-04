@@ -137,6 +137,14 @@ router.delete('/deleteFile/:projId/:fileId', jwtAuth, async (req, res) => {
 });
 
 
-router.delete('/delete/:id', jwtAuth, async (req, res) => { });
+router.delete('/delete/:id', jwtAuth, async (req, res) => { 
+
+    try {
+        const project = await projectModel.findByIdAndDelete(req.params.id);
+        res.status(200).json({success: "Project deleted successfully"});
+    } catch (err) {
+        res.status(500).json({ error: "Delete failed" });
+    }
+ });
 
 module.exports = router;
