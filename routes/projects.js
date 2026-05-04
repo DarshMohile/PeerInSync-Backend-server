@@ -13,7 +13,7 @@ router.post('/create', jwtAuth, async (req, res) => {
     console.log(req.body);
 
     const newProject = new projectModel({
-        name: data.name || "untitled_project",
+        project_title: data.name || "untitled_project",
         owner: uid,
         members: [data.members],
         files: [
