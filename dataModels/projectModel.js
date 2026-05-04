@@ -39,7 +39,7 @@ const projectSchema = new mongoose.Schema({
         required: true
     },
 
-    members: [{
+    collaborators: [{
         type: mongoose.Schema.ObjectId,
         ref: 'usermodel'
     }],
