@@ -131,16 +131,19 @@ router.put('/rename/:projId/file/:fileId', jwtAuth, async (req, res) => {
 
 router.put('/update/:projId', jwtAuth, async (req, res) => {
     try {
-        const { project_title, collaborators } = req.body;
+        const updateData = {};
+
+        if (req.body.project_title !== undefined) {
+            updateData.project_title = req.body.project_title;
+        }
+
+        if (req.body.collaborators !== undefined) {
+            updateData.collaborators = req.body.collaborators;
+        }
 
         const project = await projectModel.findByIdAndUpdate(
             req.params.projId,
-            {
-                $set: {
-                    project_title,
-                    collaborators
-                }
-            },
+            { $set: updateData },
             { new: true }
         );
 
