@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const projectModel = require('../dataModels/projectModel');
 const { jwtAuth } = require('../modules/jwt');
+const mongoose = require('mongoose');
 
 
 router.post('/create', jwtAuth, async (req, res) => {
@@ -33,12 +34,21 @@ router.post('/create', jwtAuth, async (req, res) => {
     res.status(201).json(newProject);
 });
 
-router.get('/myProjects', jwtAuth, async (req, res) => {
 
+router.get('/myProjects', jwtAuth, async (req, res) => {
     try {
-        const projects = await projectModel.find({ owner: req.user.id });
-        console.log(projects);
-        res.json(projects);
+
+        const userId = new mongoose.Types.ObjectId(req.user.id);
+
+        const projects = await projectModel.find({
+            $or: [
+                { owner: userId },
+                { "collaborators.id": userId }
+            ]
+        });
+
+        return res.json(projects);
+
     } catch (err) {
         res.status(500).json({ error: "Failed to fetch projects" });
     }
