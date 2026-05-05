@@ -19,9 +19,9 @@ router.post('/create', jwtAuth, async (req, res) => {
             : [],
         files: [
             {
-                fileName: data.fileName || "first_file.js",
-                language: data.language || "javascript",
-                content: "//start coding or make a new file for another language!",
+                fileName: data.fileName || "readme.md",
+                language: data.language || "markdown",
+                content: "# Welcome User! Create a file to start coding!!",
                 updatedAt: new Date()
             }
         ]
