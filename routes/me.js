@@ -69,4 +69,20 @@ router.put('/update', jwtAuth, async (req, res) => {
 });
 
 
+router.get('/getName/:id', jwtAuth, async (req, res) => {
+
+    try {
+        const uid = req.params.id;
+        const user = await userModel.findOne({ _id: uid });
+        const fullName = user.fName + " " + user.lName;
+        
+        return res.json({ fullName: fullName });
+    }
+    catch(e)
+    {
+        console.log(e);
+    }
+});
+
+
 module.exports = router;

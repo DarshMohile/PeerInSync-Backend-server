@@ -1,5 +1,4 @@
 module.exports = (io) => {
-
     io.on("connection", (socket) => {
         console.log("User connected:", socket.id);
 
@@ -27,6 +26,8 @@ module.exports = (io) => {
             socket.to(data.projectId).emit("file-renamed", data);
         });
 
+        socket.on("disconnect", () => {
+            console.log("User disconnected:", socket.id);
+        });
     });
-
 };
