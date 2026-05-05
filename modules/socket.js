@@ -15,6 +15,18 @@ module.exports = (io) => {
             socket.to(data.projectId).emit("cursor-move", data);
         });
 
+        socket.on("file-created", (data) => {
+            socket.to(data.projectId).emit("file-created", data);
+        });
+
+        socket.on("file-deleted", (data) => {
+            socket.to(data.projectId).emit("file-deleted", data);
+        });
+
+        socket.on("file-renamed", (data) => {
+            socket.to(data.projectId).emit("file-renamed", data);
+        });
+
     });
 
 };
